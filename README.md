@@ -28,3 +28,10 @@
 
 * Windows: `scoop install neovim`
 
+## Gitui
+
+### Config
+
+* Windows: Manual copy
+    * Destination: `~/AppData/Roaming/gitui/`
+    * Comment: Unfortuntately the symbolic links feature in Windows does not suit our use case.
