@@ -38,3 +38,13 @@
 * Unix: `ln -s {source-file} {symbolic-file}`
     * Destination: `~/.config/gitui/`
     * Link `key_bindings.ron`
+
+## Tmux
+
+### Config
+
+* Unix: `ln -s {source-file} {symbolic-file}`
+    * Destination: `~/.config/gitui/`
+        * Link `.tmux.conf`
+    * Destination: `~/.config/tmux/`
+        * Link `statusline.conf`, `macos.conf`
