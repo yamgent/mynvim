@@ -35,3 +35,6 @@
 * Windows: Manual copy
     * Destination: `~/AppData/Roaming/gitui/`
     * Comment: Unfortuntately the symbolic links feature in Windows does not suit our use case.
+* Unix: `ln -s {source-file} {symbolic-file}`
+    * Destination: `~/.config/gitui/`
+    * Link `key_bindings.ron`
