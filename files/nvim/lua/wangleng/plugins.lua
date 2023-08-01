@@ -260,6 +260,14 @@ require("lazy").setup({
 
             -- format on save
             vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+
+            local cmp = require('cmp')
+
+            cmp.setup({
+                mapping = {
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                }
+            })
         end
     },
     -- lsp: fancy symbols in auto-complete
