@@ -128,7 +128,7 @@ require("lazy").setup({
     -- statusbar
     {
         'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         opts = {}
     },
     -- tpope: surround
