@@ -48,3 +48,19 @@
         * Link `.tmux.conf`
     * Destination: `~/.config/tmux/`
         * Link `statusline.conf`, `macos.conf`
+
+## Wezterm
+
+### Prerequisites
+
+* Wezterm
+* Cascadia Code (optional)
+
+### Config
+
+* Windows: Manual copy
+    * Destination: `~/.config/wezterm/wezterm.lua`
+    * Comment: Unfortuntately the symbolic links feature in Windows does not suit our use case.
+* Unix: `ln -s {source-file} {symbolic-file}`
+    * Destination: `~/.config/wezterm/`
+        * Link `wezterm.lua`
