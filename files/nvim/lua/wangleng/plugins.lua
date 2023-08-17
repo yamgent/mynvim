@@ -86,6 +86,21 @@ require("lazy").setup({
             )
         end
     },
+    -- tree browser (floating)
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+            "MunifTanjim/nui.nvim",
+        },
+        config = function()
+            local keyset = vim.keymap.set
+            keyset("n", "<Leader>t", ":Neotree float reveal<CR>", { silent = true })
+            keyset("n", "<Leader>T", ":Neotree float<CR>", { silent = true })
+        end
+    },
     -- colorize HTML color codes, or even basic colors like red
     {
         'NvChad/nvim-colorizer.lua',
