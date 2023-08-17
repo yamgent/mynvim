@@ -23,6 +23,10 @@ vim.opt.mouse = "a"
 
 vim.opt.cursorline = true
 
+-- enable richer colors, also required by some
+-- plugins like nvim-colorizer.lua
+vim.opt.termguicolors = true
+
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "gitcommit",
     command = "setlocal textwidth=72 colorcolumn=72"
@@ -42,5 +46,5 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-  command = "silent! lua vim.highlight.on_yank()"
+    command = "silent! lua vim.highlight.on_yank()"
 })

@@ -14,12 +14,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 ----- SETUP -----
--- Required by nvim-colorizer.lua.
--- for some reason, we need to put it outside. Putting it in
--- the config function will be too late for nvim-colorizer.lua,
--- since this is required before loading the plugin
-vim.opt.termguicolors = true
-
 require("lazy").setup({
     -- Create ending brackets when starting bracket is entered
     {
