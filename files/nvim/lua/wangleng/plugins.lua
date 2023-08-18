@@ -143,7 +143,6 @@ require("lazy").setup({
             -- nvim-navic, so can get rid of 'winbar' options if we are
             -- no longer using breadcrumbs
             winbar = {
-                lualine_a = { '" "' },
                 lualine_b = { 'filename' },
                 lualine_c = { "require'nvim-navic'.get_location()" }
             },
