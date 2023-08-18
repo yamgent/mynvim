@@ -388,7 +388,6 @@ require("lazy").setup({
             lsp = {
                 auto_attach = true,
             },
-            highlight = true,
         }
     },
 
