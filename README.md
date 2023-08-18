@@ -14,6 +14,8 @@
     * Windows: Use VS installer, set PATH to add tool (see [Treesitter Wiki](https://github.com/nvim-treesitter/nvim-treesitter/wiki/Windows-support) for details)
 * Node (used by: Lsp)
     * https://volta.sh/
+* unzip (used by: mason-nvim-dap)
+    * Windows: Seems already available?
 
 ### Config
 
