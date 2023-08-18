@@ -65,6 +65,14 @@ require("lazy").setup({
             keyset("n", "<leader>F", function() require "telescope.builtin".live_grep() end, { silent = true })
         end,
     },
+    -- better algorithm for Ctrl-P
+    {
+        "natecraddock/telescope-zf-native.nvim",
+        dependencies = { "nvim-telescope/telescope.nvim" },
+        config = function()
+            require("telescope").load_extension("zf-native")
+        end
+    },
     -- file browser
     {
         "nvim-telescope/telescope-file-browser.nvim",
