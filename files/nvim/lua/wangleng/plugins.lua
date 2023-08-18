@@ -464,7 +464,7 @@ require("lazy").setup({
             ---- adapters
             -- lldb
             local lldb_cmd = vim.fn.stdpath("data") .. '/mason/packages/codelldb/codelldb'
-            if vim.fn.has('win32') then
+            if vim.fn.has('win32') == 1 then
                 lldb_cmd = vim.fn.stdpath("data") .. '/mason/packages/codelldb/extension/adapter/codelldb.exe'
             end
 
