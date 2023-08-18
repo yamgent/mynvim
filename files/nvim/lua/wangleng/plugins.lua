@@ -462,12 +462,18 @@ require("lazy").setup({
             local dap = require('dap')
 
             ---- adapters
+            -- lldb
+            local lldb_cmd = vim.fn.stdpath("data") .. '/mason/packages/codelldb/codelldb'
+            if vim.fn.has('win32') then
+                lldb_cmd = vim.fn.stdpath("data") .. '/mason/packages/codelldb/extension/adapter/codelldb.exe'
+            end
+
             dap.adapters.lldb = {
                 type = 'server',
                 port = "${port}",
                 name = 'lldb',
                 executable = {
-                    command = vim.fn.stdpath("data") .. '/mason/packages/codelldb/codelldb',
+                    command = lldb_cmd,
                     args = { "--port", "${port}" },
 
                     -- On windows you may have to uncomment this:
