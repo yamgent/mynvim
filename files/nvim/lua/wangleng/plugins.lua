@@ -208,13 +208,8 @@ require("lazy").setup({
         branch = 'v2.x',
         dependencies = {
             -- LSP Support
-            { 'neovim/nvim-lspconfig' }, -- Required
-            {                            -- Optional
-                'williamboman/mason.nvim',
-                build = function()
-                    pcall(vim.cmd, 'MasonUpdate')
-                end,
-            },
+            { 'neovim/nvim-lspconfig' },             -- Required
+            { 'williamboman/mason.nvim' },           -- Optional
             { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
             -- Autocompletion
@@ -252,6 +247,8 @@ require("lazy").setup({
                 'cssls',
                 'svelte',
                 'lua_ls',
+                'clangd',
+                'gopls',
             })
 
             vim.opt.signcolumn = 'yes'
