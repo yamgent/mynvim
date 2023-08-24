@@ -326,6 +326,10 @@ require("lazy").setup({
         },
         config = function()
             local lspkind = require('lspkind')
+            lspkind.init({
+                mode = 'symbol_text'
+            })
+
             local cmp = require('cmp')
             cmp.setup {
                 formatting = {
