@@ -186,10 +186,12 @@ require("lazy").setup({
                 ensure_installed = {
                     "vim", "lua", "vimdoc",
                     "gitcommit", "gitignore",
-                    "javascript", "typescript", "tsx", "css", "scss", "html", "vue", "svelte", "json", "yaml",
+                    "javascript", "typescript", "tsx", "css", "scss", "html", "vue", "svelte", "yaml",
+                    "json", "jsonc",
                     "python",
-                    "c",
-                    "rust", "toml"
+                    "c", "cpp", "cmake",
+                    "rust", "toml",
+                    "go", "gomod",
                 },
                 -- install parsers synchronously (only applied to `ensure_installed`)
                 sync_install = false,
