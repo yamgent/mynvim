@@ -225,10 +225,6 @@ require("lazy").setup({
                 call_servers = 'local',
                 configure_diagnostics = true,
                 setup_servers_on_start = true,
-                set_lsp_keymaps = {
-                    preserve_mappings = false,
-                    omit = {},
-                },
                 manage_nvim_cmp = {
                     set_sources = 'recommended',
                     set_basic_mappings = true,
@@ -254,6 +250,10 @@ require("lazy").setup({
             vim.opt.signcolumn = 'yes'
 
             lsp.on_attach(function(client, bufnr)
+                -- see :help lsp-zero-keybindings
+                -- to learn the available actions
+                lsp.default_keymaps({ buffer = bufnr })
+
                 local opts = { buffer = bufnr, remap = false }
                 local keyset = vim.keymap.set
                 keyset("n", "<C-k>", function() vim.diagnostic.goto_prev() end, opts)
