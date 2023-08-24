@@ -225,14 +225,6 @@ require("lazy").setup({
                 call_servers = 'local',
                 configure_diagnostics = true,
                 setup_servers_on_start = true,
-                manage_nvim_cmp = {
-                    set_sources = 'recommended',
-                    set_basic_mappings = true,
-                    set_extra_mappings = false,
-                    use_luasnip = true,
-                    set_format = true,
-                    documentation_window = true,
-                },
             })
 
             lsp.ensure_installed({
@@ -290,6 +282,15 @@ require("lazy").setup({
             -- format on save
             vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
+            -- cmp
+            lsp.extend_cmp({
+                set_sources = 'recommended',
+                set_basic_mappings = true,
+                set_extra_mappings = false,
+                use_luasnip = true,
+                set_format = true,
+                documentation_window = true,
+            })
             local cmp = require('cmp')
 
             cmp.setup({
