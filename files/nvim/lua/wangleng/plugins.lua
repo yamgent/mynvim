@@ -14,6 +14,18 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 ----- SETUP -----
+local lsp_servers = {
+    'rust_analyzer',
+    'tsserver',
+    'eslint',
+    'jsonls',
+    'cssls',
+    'svelte',
+    'lua_ls',
+    'clangd',
+    'gopls',
+}
+
 require("lazy").setup({
     -- Create ending brackets when starting bracket is entered
     {
@@ -202,6 +214,22 @@ require("lazy").setup({
             })
         end
     },
+    -- mason: manager for LSP, DAP, formatters, etc...
+    {
+        'williamboman/mason.nvim',
+        opts = {},
+    },
+    -- mason configuration
+    {
+        'williamboman/mason-lspconfig.nvim',
+        dependencies = {
+            { 'neovim/nvim-lspconfig' },
+            { 'williamboman/mason.nvim' },
+        },
+        opts = {
+            ensure_installed = lsp_servers,
+        },
+    },
     -- lsp
     {
         'VonHeikemen/lsp-zero.nvim',
@@ -226,19 +254,7 @@ require("lazy").setup({
                 setup_servers_on_start = false, -- will be removed from v3.0
             })
 
-            local servers = {
-                'rust_analyzer',
-                'tsserver',
-                'eslint',
-                'jsonls',
-                'cssls',
-                'svelte',
-                'lua_ls',
-                'clangd',
-                'gopls',
-            }
-            lsp.ensure_installed(servers)
-            lsp.setup_servers(servers)
+            lsp.setup_servers(lsp_servers)
 
             vim.opt.signcolumn = 'yes'
 
