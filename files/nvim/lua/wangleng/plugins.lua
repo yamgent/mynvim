@@ -295,6 +295,7 @@ require("lazy").setup({
             cmp.setup({
                 mapping = {
                     ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ['<C-Space>'] = cmp.mapping.complete(),
                 }
             })
         end
