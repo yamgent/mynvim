@@ -31,7 +31,6 @@ require("lazy").setup({
         'APZelos/blamer.nvim',
         config = function()
             vim.g.blamer_enabled = 1
-            vim.g.blamer_prefix = "      ~> "
         end
     },
     -- Ctrl+P file list
