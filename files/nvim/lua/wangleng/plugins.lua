@@ -140,9 +140,8 @@ require("lazy").setup({
         'windwp/nvim-spectre',
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
-            local spectre = require('spectre')
             local keyset = vim.keymap.set
-            keyset("n", "<leader>f", function() spectre.open() end)
+            keyset("n", "<leader>f", function() require('spectre').open() end)
         end
     },
     -- statusbar
