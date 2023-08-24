@@ -61,7 +61,11 @@ require("lazy").setup({
             keyset("n", "<C-p>", function() project_files() end, { silent = true })
 
             -- additional: live grep
-            keyset("n", "<leader>F", function() require "telescope.builtin".live_grep() end, { silent = true })
+            keyset("n", "<leader>F", function()
+                require "telescope.builtin".live_grep({
+                    layout_strategy = 'vertical',
+                })
+            end, { silent = true })
         end,
     },
     -- better algorithm for Ctrl-P
