@@ -469,6 +469,10 @@ require("lazy").setup({
             dap.listeners.before.event_exited["dapui_config"] = function()
                 dapui.close()
             end
+
+            local keyset = vim.keymap.set
+            keyset('n', '<Leader>duo', function() dapui.open() end)
+            keyset('n', '<Leader>duc', function() dapui.close() end)
         end
     },
     -- dap: install common adapters
