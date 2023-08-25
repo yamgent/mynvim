@@ -41,7 +41,9 @@ ln -s <repo-file> <final-file>`
 
 * Link `~/.config/wezterm/wezterm.lua` -> `files/wezterm/wezterm.lua`
 
-(Note: On Windows, don't use `/AppData/` for wezterm. We literally meant `C:\Users\<name>\.config\wezterm\wezterm.lua`).
+(Note: On Windows, don't use `/AppData/` for wezterm. We literally meant `C:\Users\<name>\.config\wezterm\wezterm.lua`.)
+
+(Note 2: wezterm watcher may not work on Windows, remember to restart app.)
 
 ### Package Manager
 
