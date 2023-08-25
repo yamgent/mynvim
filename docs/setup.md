@@ -279,15 +279,25 @@ cargo install gitui
 #### Install
 
 * Windows: N.A.
-* Unix: ???
+* macOS:
+
+```sh
+brew install tmux
+```
+
+* Ubuntu:
+
+```sh
+sudo apt install tmux
+```
 
 #### Config
 
 * Windows: N.A.
 * Unix:
     * Link: `~/.tmux.conf` -> `files/tmux/.tmux.conf`
-    * Link: `~/.config/tmux/statusline.conf` -> `files/tmux/statusline.conf`
-    * Link: `~/.config/tmux/macos.conf` -> `files/tmux/macos.conf`
+    * Link: `~/.config/tmux/statusline.conf` -> `files/tmux/tmux/statusline.conf`
+    * Link: `~/.config/tmux/macos.conf` -> `files/tmux/tmux/macos.conf`
 
 ## 07 - Others
 
