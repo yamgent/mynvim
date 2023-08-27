@@ -187,6 +187,19 @@ require("lazy").setup({
     },
     -- tpope: comment
     'tpope/vim-commentary',
+    -- file jump list (harpoon)
+    {
+        "ThePrimeagen/harpoon",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        config = function()
+            local keyset = vim.keymap.set
+            keyset("n", "<Leader>h", function() require("harpoon.mark").add_file() end)
+            keyset("n", "<Leader>H", function() require("harpoon.ui").toggle_quick_menu() end)
+            keyset("n", "\\", function() require("harpoon.ui").nav_file(vim.v.count1) end)
+        end
+    },
     -- treesitter syntax highlighting
     {
         "nvim-treesitter/nvim-treesitter",
