@@ -573,7 +573,14 @@ require("lazy").setup({
     {
         'navarasu/onedark.nvim',
         config = function()
-            vim.cmd('colorscheme onedark')
+            -- vim.cmd('colorscheme onedark')
+        end
+    },
+    -- THEME: kanagawa
+    {
+        'rebelot/kanagawa.nvim',
+        config = function()
+            vim.cmd('colorscheme kanagawa')
         end
     },
     -- THEME: darcula
