@@ -548,11 +548,6 @@ require("lazy").setup({
         'morhetz/gruvbox',
         config = function()
             -- vim.cmd('colorscheme gruvbox')
-
-            -- some terminal do not support underline, so we must
-            -- use background for error/warning highlighting instead :/
-            -- NOTE: If your terminal supports underlining, recommend to disable this!
-            ---- vim.g.gruvbox_guisp_fallback = 'bg'
         end
     },
     -- THEME: tokyonight
@@ -590,19 +585,4 @@ require("lazy").setup({
             -- vim.cmd('colorscheme darcula')
         end
     },
-    -- THEME: seoul256
-    {
-        'junegunn/seoul256.vim',
-        config = function()
-            -- vim.g.seoul256_background = 234
-            -- vim.cmd('colorscheme seoul256')
-        end
-    },
-    -- THEME: lunar
-    {
-        'lunarvim/lunar.nvim',
-        config = function()
-            -- vim.cmd('colorscheme lunar')
-        end
-    }
 })
