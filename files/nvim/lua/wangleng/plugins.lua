@@ -78,6 +78,10 @@ require("lazy").setup({
                     layout_strategy = 'vertical',
                 })
             end, { silent = true })
+
+            -- additional: symbol searches
+            keyset("n", "<leader>s", function() require "telescope.builtin".lsp_document_symbols() end)
+            keyset("n", "<leader>S", function() require "telescope.builtin".lsp_workspace_symbols() end)
         end,
     },
     -- better algorithm for Ctrl-P
