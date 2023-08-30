@@ -426,7 +426,16 @@ require("lazy").setup({
             })
         end
     },
-    -- code context breadcrumb
+    -- lsp: lsp update messages
+    {
+        "j-hui/fidget.nvim",
+        tag = "legacy",
+        event = "LspAttach",
+        opts = {
+            -- options
+        },
+    },
+    -- lsp: code context breadcrumb
     {
         'SmiteshP/nvim-navic',
         dependencies = {
