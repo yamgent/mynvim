@@ -60,7 +60,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 end
 
 if wezterm.target_triple == "x86_64-apple-darwin" then
-    config.font_size = 15
+    config.font_size = 14
 end
 
 return config
