@@ -129,6 +129,12 @@ require("lazy").setup({
                         hide_dotfiles = false,
                     },
                     hijack_netrw_behavior = "open_current",
+                    window = {
+                        mappings = {
+                            ["h"] = "close_node",
+                            ["l"] = "open",
+                        },
+                    },
                 },
             })
 
