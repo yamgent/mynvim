@@ -123,6 +123,14 @@ require("lazy").setup({
             "MunifTanjim/nui.nvim",
         },
         config = function()
+            require("neo-tree").setup({
+                filesystem = {
+                    filtered_items = {
+                        hide_dotfiles = false,
+                    },
+                },
+            })
+
             local keyset = vim.keymap.set
             keyset("n", "<Leader>t", ":Neotree float reveal<CR>", { silent = true })
             keyset("n", "<Leader>T", ":Neotree float<CR>", { silent = true })
