@@ -197,7 +197,8 @@ set -gx PATH $PATH "/usr/local/go/bin"
     * `cargo install ripgrep`
 * Sed (used by: Spectre [find & replace], Telescope)
     * Windows: `scoop install sed`
-    * Unix: Should be installed by default
+    * MacOS: `brew install gnu-sed`
+    * Linux: Should be installed by default
 * unzip (used by: mason-nvim-dap)
     * Windows: Should be installed by default
     * Ubuntu:
