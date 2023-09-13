@@ -73,7 +73,7 @@ require("lazy").setup({
             keyset("n", "<C-p>", function() project_files() end, { silent = true })
 
             -- additional: live grep
-            keyset("n", "<leader>F", function()
+            keyset("n", "<leader>f", function()
                 require "telescope.builtin".live_grep({
                     layout_strategy = 'vertical',
                 })
@@ -172,7 +172,7 @@ require("lazy").setup({
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
             local keyset = vim.keymap.set
-            keyset("n", "<leader>f", function() require('spectre').open() end)
+            keyset("n", "<leader>F", function() require('spectre').open() end)
         end
     },
     -- statusbar
