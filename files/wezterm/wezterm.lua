@@ -61,6 +61,16 @@ end
 
 if wezterm.target_triple == "x86_64-apple-darwin" then
     config.font_size = 14
+
+    -- honor mac os clipboard shortcuts
+    table.insert(
+        config.keys,
+        { key = "v", mods = "OPT", action = wezterm.action.PasteFrom 'Clipboard' }
+    )
+    table.insert(
+        config.keys,
+        { key = "c", mods = "OPT", action = wezterm.action.CopyTo 'Clipboard' }
+    )
 end
 
 return config
