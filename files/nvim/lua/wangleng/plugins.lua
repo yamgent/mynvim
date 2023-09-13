@@ -128,6 +128,7 @@ require("lazy").setup({
                     filtered_items = {
                         hide_dotfiles = false,
                     },
+                    hijack_netrw_behavior = "open_current",
                 },
             })
 
