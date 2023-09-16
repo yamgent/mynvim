@@ -337,6 +337,35 @@ require("lazy").setup({
                         local lua_opts = lsp_zero.nvim_lua_ls()
                         require('lspconfig').lua_ls.setup(lua_opts)
                     end,
+                    tsserver = function()
+                        -- typescript inlay hints need to be manually enabled
+                        require('lspconfig').tsserver.setup({
+                            settings = {
+                                typescript = {
+                                    inlayHints = {
+                                        includeInlayParameterNameHints = 'all',
+                                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                        includeInlayFunctionParameterTypeHints = true,
+                                        includeInlayVariableTypeHints = true,
+                                        includeInlayPropertyDeclarationTypeHints = true,
+                                        includeInlayFunctionLikeReturnTypeHints = true,
+                                        includeInlayEnumMemberValueHints = true,
+                                    }
+                                },
+                                javascript = {
+                                    inlayHints = {
+                                        includeInlayParameterNameHints = 'all',
+                                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                        includeInlayFunctionParameterTypeHints = true,
+                                        includeInlayVariableTypeHints = true,
+                                        includeInlayPropertyDeclarationTypeHints = true,
+                                        includeInlayFunctionLikeReturnTypeHints = true,
+                                        includeInlayEnumMemberValueHints = true,
+                                    }
+                                }
+                            }
+                        })
+                    end
                 }
             })
         end
@@ -409,7 +438,7 @@ require("lazy").setup({
             })
         end
     },
-    -- lsp: inlay hints
+    -- lsp: inlay hints UI
     {
         'lvimuser/lsp-inlayhints.nvim',
         dependencies = {
@@ -432,34 +461,6 @@ require("lazy").setup({
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
                     require("lsp-inlayhints").on_attach(client, bufnr)
                 end,
-            })
-
-            -- for typescript inlay hints
-            require('lspconfig').tsserver.setup({
-                settings = {
-                    typescript = {
-                        inlayHints = {
-                            includeInlayParameterNameHints = 'all',
-                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                            includeInlayFunctionParameterTypeHints = true,
-                            includeInlayVariableTypeHints = true,
-                            includeInlayPropertyDeclarationTypeHints = true,
-                            includeInlayFunctionLikeReturnTypeHints = true,
-                            includeInlayEnumMemberValueHints = true,
-                        }
-                    },
-                    javascript = {
-                        inlayHints = {
-                            includeInlayParameterNameHints = 'all',
-                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                            includeInlayFunctionParameterTypeHints = true,
-                            includeInlayVariableTypeHints = true,
-                            includeInlayPropertyDeclarationTypeHints = true,
-                            includeInlayFunctionLikeReturnTypeHints = true,
-                            includeInlayEnumMemberValueHints = true,
-                        }
-                    }
-                }
             })
         end
     },
