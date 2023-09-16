@@ -294,7 +294,7 @@ require("lazy").setup({
             local lsp = require('lsp-zero')
 
             lsp.preset({
-                float_border = 'rounded',
+                float_border = 'rounded',       -- will be default in v3.0
                 call_servers = 'local',         -- will be removed from v3.0
                 setup_servers_on_start = false, -- will be removed from v3.0
             })
