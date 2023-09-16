@@ -332,6 +332,11 @@ require("lazy").setup({
                 },
                 handlers = {
                     lsp_zero.default_setup,
+                    lua_ls = function()
+                        -- nvim_lua_ls() configures lua_ls to understand neovim config lua
+                        local lua_opts = lsp_zero.nvim_lua_ls()
+                        require('lspconfig').lua_ls.setup(lua_opts)
+                    end,
                 }
             })
         end
