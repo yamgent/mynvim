@@ -264,6 +264,13 @@ require("lazy").setup({
     },
     -- lsp
     {
+        'neovim/nvim-lspconfig',
+        dependencies = {
+            { 'hrsh7th/cmp-nvim-lsp' },
+        },
+    },
+    -- lsp: glue code
+    {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
         dependencies = {
@@ -271,11 +278,6 @@ require("lazy").setup({
             { 'neovim/nvim-lspconfig' },             -- Required
             { 'williamboman/mason.nvim' },           -- Optional
             { 'williamboman/mason-lspconfig.nvim' }, -- Optional
-
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },     -- Required
-            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-            { 'L3MON4D3/LuaSnip' },     -- Required
         },
         config = function()
             local lsp = require('lsp-zero')
@@ -335,9 +337,21 @@ require("lazy").setup({
                     vim.lsp.buf.format()
                 end
             })
+        end
+    },
+    -- lsp: auto completion
+    {
+        'hrsh7th/nvim-cmp',
+        dependencies = {
+            {
+                'L3MON4D3/LuaSnip',
+                'VonHeikemen/lsp-zero.nvim',
+            },
+        },
+        config = function()
+            local lsp_zero = require('lsp-zero')
 
-            -- cmp
-            lsp.extend_cmp({
+            lsp_zero.extend_cmp({
                 set_sources = 'recommended',
                 set_basic_mappings = true,
                 set_extra_mappings = false,
@@ -345,6 +359,7 @@ require("lazy").setup({
                 set_format = true,
                 documentation_window = true,
             })
+
             local cmp = require('cmp')
 
             cmp.setup({
