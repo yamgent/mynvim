@@ -260,13 +260,13 @@ require("lazy").setup({
             { 'neovim/nvim-lspconfig' },
         },
         config = function()
-            local lsp = require('lsp-zero')
-            lsp.extend_lspconfig()
+            local lsp_zero = require('lsp-zero')
+            lsp_zero.extend_lspconfig()
 
-            lsp.on_attach(function(client, bufnr)
+            lsp_zero.on_attach(function(client, bufnr)
                 -- see :help lsp-zero-keybindings
                 -- to learn the available actions
-                lsp.default_keymaps({ buffer = bufnr })
+                lsp_zero.default_keymaps({ buffer = bufnr })
 
                 local opts = { buffer = bufnr, remap = false }
                 local keyset = vim.keymap.set
