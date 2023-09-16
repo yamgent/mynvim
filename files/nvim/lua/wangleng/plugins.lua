@@ -255,12 +255,21 @@ require("lazy").setup({
     {
         'williamboman/mason-lspconfig.nvim',
         dependencies = {
+            { 'VonHeikemen/lsp-zero.nvim' },
             { 'neovim/nvim-lspconfig' },
             { 'williamboman/mason.nvim' },
         },
-        opts = {
-            ensure_installed = lsp_servers,
-        },
+        config = function()
+            local lsp_zero = require('lsp-zero')
+            lsp_zero.extend_lspconfig()
+
+            require('mason-lspconfig').setup({
+                ensure_installed = lsp_servers,
+                handlers = {
+                    lsp_zero.default_setup
+                }
+            })
+        end
     },
     -- lsp
     {
@@ -283,23 +292,13 @@ require("lazy").setup({
     -- lsp: glue code
     {
         'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
+        branch = 'v3.x',
         dependencies = {
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' },             -- Required
-            { 'williamboman/mason.nvim' },           -- Optional
-            { 'williamboman/mason-lspconfig.nvim' }, -- Optional
+            { 'neovim/nvim-lspconfig' },
         },
         config = function()
             local lsp = require('lsp-zero')
-
-            lsp.preset({
-                float_border = 'rounded',       -- will be default in v3.0
-                call_servers = 'local',         -- will be removed from v3.0
-                setup_servers_on_start = false, -- will be removed from v3.0
-            })
-
-            lsp.setup_servers(lsp_servers)
+            lsp.extend_lspconfig()
 
             lsp.on_attach(function(client, bufnr)
                 -- see :help lsp-zero-keybindings
@@ -314,9 +313,7 @@ require("lazy").setup({
                 keyset("n", "<leader>a", function() vim.lsp.buf.code_action() end, opts)
             end)
 
-            lsp.setup()
-
-            -- need to be called after setup(), otherwise the diagnostic display doesn't work
+            -- need to be called after extend_lspconfig(), otherwise the diagnostic display doesn't work
             vim.diagnostic.config({
                 virtual_text = true,
                 signs = true,
