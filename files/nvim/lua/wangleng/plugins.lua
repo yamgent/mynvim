@@ -14,18 +14,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 ----- SETUP -----
-local lsp_servers = {
-    'rust_analyzer',
-    'tsserver',
-    'eslint',
-    'jsonls',
-    'cssls',
-    'svelte',
-    'lua_ls',
-    'clangd',
-    'gopls',
-}
-
 require("lazy").setup({
     -- Create ending brackets when starting bracket is entered
     {
@@ -246,31 +234,6 @@ require("lazy").setup({
             })
         end
     },
-    -- mason: manager for LSP, DAP, formatters, etc...
-    {
-        'williamboman/mason.nvim',
-        opts = {},
-    },
-    -- mason configuration
-    {
-        'williamboman/mason-lspconfig.nvim',
-        dependencies = {
-            { 'VonHeikemen/lsp-zero.nvim' },
-            { 'neovim/nvim-lspconfig' },
-            { 'williamboman/mason.nvim' },
-        },
-        config = function()
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_lspconfig()
-
-            require('mason-lspconfig').setup({
-                ensure_installed = lsp_servers,
-                handlers = {
-                    lsp_zero.default_setup
-                }
-            })
-        end
-    },
     -- lsp
     {
         'neovim/nvim-lspconfig',
@@ -335,6 +298,41 @@ require("lazy").setup({
                         return d.message
                     end,
                 },
+            })
+        end
+    },
+    -- mason: manager for LSP, DAP, formatters, etc...
+    {
+        'williamboman/mason.nvim',
+        opts = {},
+    },
+    -- mason configuration
+    {
+        'williamboman/mason-lspconfig.nvim',
+        dependencies = {
+            { 'VonHeikemen/lsp-zero.nvim' },
+            { 'neovim/nvim-lspconfig' },
+            { 'williamboman/mason.nvim' },
+        },
+        config = function()
+            local lsp_zero = require('lsp-zero')
+            lsp_zero.extend_lspconfig()
+
+            require('mason-lspconfig').setup({
+                ensure_installed = {
+                    'rust_analyzer',
+                    'tsserver',
+                    'eslint',
+                    'jsonls',
+                    'cssls',
+                    'svelte',
+                    'lua_ls',
+                    'clangd',
+                    'gopls',
+                },
+                handlers = {
+                    lsp_zero.default_setup,
+                }
             })
         end
     },
