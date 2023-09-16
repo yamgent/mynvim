@@ -268,6 +268,17 @@ require("lazy").setup({
         dependencies = {
             { 'hrsh7th/cmp-nvim-lsp' },
         },
+        config = function()
+            vim.opt.signcolumn = 'yes'
+
+            -- format on save
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                pattern = "*",
+                callback = function()
+                    vim.lsp.buf.format()
+                end
+            })
+        end
     },
     -- lsp: glue code
     {
@@ -290,8 +301,6 @@ require("lazy").setup({
 
             lsp.setup_servers(lsp_servers)
 
-            vim.opt.signcolumn = 'yes'
-
             lsp.on_attach(function(client, bufnr)
                 -- see :help lsp-zero-keybindings
                 -- to learn the available actions
@@ -307,6 +316,7 @@ require("lazy").setup({
 
             lsp.setup()
 
+            -- need to be called after setup(), otherwise the diagnostic display doesn't work
             vim.diagnostic.config({
                 virtual_text = true,
                 signs = true,
@@ -328,14 +338,6 @@ require("lazy").setup({
                         return d.message
                     end,
                 },
-            })
-
-            -- format on save
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                pattern = "*",
-                callback = function()
-                    vim.lsp.buf.format()
-                end
             })
         end
     },
