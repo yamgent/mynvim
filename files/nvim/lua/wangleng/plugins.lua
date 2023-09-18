@@ -447,6 +447,9 @@ require("lazy").setup({
         config = function()
             require('lsp-inlayhints').setup()
 
+            -- use more gentle color for inlay hint rendering
+            vim.cmd('hi link LspInlayHint Comment')
+
             -- boilerplate setup code for this plugin, to attach
             -- hints once LSP is activated
             vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
