@@ -13,6 +13,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- lazy.nvim default priority is 50
+local colorSchemePriority = 100
+
 ----- SETUP -----
 require("lazy").setup({
     -- Create ending brackets when starting bracket is entered
@@ -443,9 +446,6 @@ require("lazy").setup({
         config = function()
             require('lsp-inlayhints').setup()
 
-            -- use more gentle color for inlay hint rendering
-            vim.cmd('hi link LspInlayHint Comment')
-
             -- boilerplate setup code for this plugin, to attach
             -- hints once LSP is activated
             vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
@@ -596,6 +596,8 @@ require("lazy").setup({
     -- THEME: gruvbox
     {
         'morhetz/gruvbox',
+        priority = colorSchemePriority,
+        lazy = false,
         config = function()
             -- vim.cmd('colorscheme gruvbox')
         end
@@ -603,6 +605,8 @@ require("lazy").setup({
     -- THEME: tokyonight
     {
         'folke/tokyonight.nvim',
+        priority = colorSchemePriority,
+        lazy = false,
         config = function()
             -- vim.cmd('colorscheme tokyonight-night')
         end
@@ -610,6 +614,8 @@ require("lazy").setup({
     -- THEME: vscode
     {
         'Mofiqul/vscode.nvim',
+        priority = colorSchemePriority,
+        lazy = false,
         config = function()
             -- vim.cmd('colorscheme vscode')
         end
@@ -617,6 +623,8 @@ require("lazy").setup({
     -- THEME: onedark
     {
         'navarasu/onedark.nvim',
+        priority = colorSchemePriority,
+        lazy = false,
         config = function()
             -- vim.cmd('colorscheme onedark')
         end
@@ -624,6 +632,8 @@ require("lazy").setup({
     -- THEME: kanagawa
     {
         'rebelot/kanagawa.nvim',
+        priority = colorSchemePriority,
+        lazy = false,
         config = function()
             vim.cmd('colorscheme kanagawa')
         end
@@ -631,6 +641,8 @@ require("lazy").setup({
     -- THEME: darcula
     {
         'doums/darcula',
+        priority = colorSchemePriority,
+        lazy = false,
         config = function()
             -- vim.cmd('colorscheme darcula')
         end
