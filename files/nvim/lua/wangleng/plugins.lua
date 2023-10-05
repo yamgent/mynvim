@@ -43,19 +43,15 @@ require("lazy").setup({
             local keyset = vim.keymap.set
 
             local project_files = function()
-                vim.fn.system('git rev-parse --is-inside-work-tree')
-                if vim.v.shell_error == 0 then
-                    -- when inside a git repo, this will respect
-                    -- gitignore
-                    require "telescope.builtin".git_files({
-                        show_untracked = true,
-                    })
-                else
-                    require "telescope.builtin".find_files({
-                        no_ignore = false,
-                        hidden = true,
-                    })
-                end
+                require "telescope.builtin".find_files({
+                    find_command = {
+                        'rg', '--files',    -- use ripgrep files list
+                        '--color', 'never', -- telescope by default pass this
+                        '-L',               -- follow symlinks
+                        '--hidden',         -- show dotfiles...
+                        '-g', '!.git/**'    -- ...but don't show '.git/' folder!
+                    }
+                })
             end
 
             keyset("n", "<C-p>", function() project_files() end, { silent = true })
