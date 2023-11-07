@@ -1,1 +1,1 @@
-# dotfiles
+# mynvim
