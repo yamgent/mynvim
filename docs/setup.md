@@ -1,224 +1,43 @@
 # Setup instructions
 
-## Common
-
-### Doing Symbolic Links
-
-#### Windows
-
-Note that this needs to be done on a:
-* **`cmd.exe`** terminal
-* with **Admin** privileges.
-
-File:
-
-```sh
-mklink <final-file> <repo-file>
-```
-
-Folder:
-
-```sh
-mklink /D <final-folder> <repo-folder>
-```
-
-#### Unix
-
-```sh
-ln -s <repo-file> <final-file>`
-```
-
-## 01 - Core
-
-### Wezterm
-
-#### Install
-
-1. Download wezterm from: https://wezfurlong.org/wezterm/installation.html
-2. Install 'Cascadia Code' from: https://github.com/microsoft/cascadia-code/releases
-
-#### Config
-
-* Link `~/.config/wezterm/wezterm.lua` -> `files/wezterm/wezterm.lua`
-
-(Note: On Windows, don't use `/AppData/` for wezterm. We literally meant `C:\Users\<name>\.config\wezterm\wezterm.lua`.)
-
-(Note 2: wezterm watcher may not work on Windows, remember to restart app.)
-
-### Package Manager
-
-* Windows: https://scoop.sh/
-* macOS: https://brew.sh/
-    * Check requirements at: https://docs.brew.sh/Installation
-    * Most notably, require build tools:
-```sh
-xcode-select --install
-```
-
-* Ubuntu: N.A.
-
-### Git
-
-#### Install
-
-* Windows: https://git-scm.com/download/win
-* macOS:
-
-```sh
-brew install git
-```
-
-* Ubuntu:
-
-```sh
-sudo add-apt-repository ppa:git-core/ppa
-sudo apt update
-sudo apt install git
-```
-
-Source: https://git-scm.com/downloads
-
-## 02 - Shell
-
-### Fish shell
-
-#### Install
-
-* Windows: N.A.
-* macOS:
-
-```sh
-brew install fish
-```
-
-* Ubuntu:
-
-```sh
-sudo apt-add-repository ppa:fish-shell/release-3
-sudo apt update
-sudo apt install fish
-```
-
-Source:
-* https://fishshell.com/
-
-#### Config
-
-Append the following to `~/.config/fish/config.fish` to show git info:
-
-```fish
-set __fish_git_prompt_show_informative_status 1
-```
-
-## 03 - Languages
-
-### Clang
-
-* Windows: Use VS installer (see https://learn.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170#install-1)
-* macOS: N.A. (we already installed when setting up Homebrew).
-* Ubuntu:
-
-```sh
-sudo apt install build-essential clang
-```
-
-#### Config
-
-For Windows, setting up `PATH` is essential so that some tools (e.g. treesitter plugin in neovim) can access clang. For more details, see [Treesitter Wiki](https://github.com/nvim-treesitter/nvim-treesitter/wiki/Windows-support) ("Through Visual Studio")
-
-For other OS, no config is required.
-
-### Rust
-
-#### Install
-
-* Windows: Download from https://www.rust-lang.org/tools/install.
-* Unix:
-
-```sh
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-Source:
-* https://www.rust-lang.org/tools/install
-* https://forge.rust-lang.org/infra/other-installation-methods.html
-
-#### Config
-
-For fish shell, append the following to `~/.config/fish/config.fish`:
-
-```fish
-set -gx PATH "$HOME/.cargo/bin" $PATH
-```
-
-### Volta (node, yarn, ...)
-
-#### Install
-
-* Windows: Download from https://docs.volta.sh/guide/getting-started.
-* Unix:
-
-```sh
-curl https://get.volta.sh | bash
-volta install node
-```
-
-Source:
-* https://docs.volta.sh/guide/getting-started
-
-#### Config
-
-For fish shell, append the following to `~/.config/fish/config.fish`:
-
-```fish
-set -gx VOLTA_HOME "$HOME/.volta"
-set -gx PATH "$VOLTA_HOME/bin" $PATH
-```
-
-### Golang
-
-#### Install
-
-Download from https://go.dev/doc/install, follow webpage instructions.
-
-#### Config
-
-For fish shell, append the following to `~/.config/fish/config.fish`:
-
-```fish
-set -gx PATH $PATH "/usr/local/go/bin"
-```
-
-## 04 - Neovim Prerequisites
-
-### To fulfill
-
-* Ripgrep (used by: Spectre [find & replace], Telescope)
-    * `cargo install ripgrep`
-* Sed (used by: Spectre [find & replace], Telescope)
-    * Windows: `scoop install sed`
-    * MacOS: `brew install gnu-sed`
-    * Linux: Should be installed by default
-* unzip (used by: mason-nvim-dap)
-    * Windows: Should be installed by default
-    * Ubuntu:
+## 00 - Prerequisites
+
+### Common
+* Rust
+    * Rationale: Mainly for compiling
+* Clang
+    * Plugin users: Treesitter
+    * Note: For Windows, setting up `PATH` is essential so that Treesitter can access clang. For more details, see [Treesitter Wiki](https://github.com/nvim-treesitter/nvim-treesitter/wiki/Windows-support) ("Through Visual Studio")
+* Nodejs
+    * Plugin users: Lsp
+* Nerd Fonts
+    * Plugin users: Telescope, lualine, ...
+    * Note: If you use wezterm, it already has it.
+    * Install: https://www.nerdfonts.com/
+* Package manager (Windows: scoop, macOS: brew)
+    * Rationale: Mainly for installing common tools
+
+### Core
+
+* Ripgrep
+    * Plugin users: Spectre [find & replace], Telescope
+    * Install: `cargo install ripgrep`
+* Sed
+    * Plugin users: Spectre [find & replace], Telescope
+    * Install:
+        * Windows: `scoop install sed`
+        * MacOS: `brew install gnu-sed`
+        * Linux: Should be installed by default
+* unzip
+    * Plugin users: mason-nvim-dap
+    * Install:
+        * Windows: Should be installed by default
+        * Ubuntu:
 ```sh
 sudo apt install unzip
 ```
 
-### Already fulfilled
-
-* Nerd Fonts (used by: Telescope, lualine, ...)
-    * wezterm already has it.
-    * https://www.nerdfonts.com/
-* Clang (used by: Treesitter)
-    * We already installed above.
-* Node (used by: Lsp)
-    * We already installed above.
-
-## 05 - Neovim
-
-#### Install
+## 01 - Install Neovim
 
 * Windows:
 
@@ -242,78 +61,26 @@ sudo mv nvim.appimage /usr/local/bin/nvim
 
 Source: https://github.com/neovim/neovim/wiki/Installing-Neovim
 
-#### Config - Git
+### Config - Git
+
 ```sh
 git config --global core.editor nvim
 ```
 
-#### Config - Nvim
+## 02 - Clone mynvim Repo
 
 * Windows
-    * Link:
-        * `~/AppData/Local/nvim/init.lua` -> `files/nvim/init.lua`
-        * `~/AppData/Local/nvim/lazy-lock.json` -> `files/nvim/lazy-lock.json`
-        * `~/AppData/Local/nvim/lua/wangleng/` -> `files/nvim/lua/wangleng/`
+
+```sh
+cd ~/AppData/Local/
+git clone git@github.com:yamgent/mynvim.git nvim
+```
+
 * Unix
-    * Link:
-        * `~/.config/nvim/init.lua` -> `files/nvim/init.lua`
-        * `~/.config/nvim/lazy-lock.json` -> `files/nvim/lazy-lock.json`
-        * `~/.config/nvim/lua/wangleng/` -> `files/nvim/lua/wangleng/`
-
-## 06 - Other dotfiles
-
-### Gitui
-
-#### Install
 
 ```sh
-cargo install gitui
+mkdir -p ~/.config
+cd ~/.config
+git clone git@github.com:yamgent/mynvim.git nvim
 ```
 
-#### Config
-
-* Windows: Link `~/AppData/Roaming/gitui/key_bindings.ron` -> `files/gitui/key_bindings.ron`
-* Unix: Link `~/.config/gitui/key_bindings.ron` -> `files/gitui/key_bindings.ron`
-
-### Tmux
-
-#### Install
-
-* Windows: N.A.
-* macOS:
-
-```sh
-brew install tmux
-```
-
-* Ubuntu:
-
-```sh
-sudo apt install tmux
-```
-
-#### Config
-
-* Windows: N.A.
-* Unix:
-    * Link: `~/.tmux.conf` -> `files/tmux/.tmux.conf`
-    * Link: `~/.config/tmux/statusline.conf` -> `files/tmux/tmux/statusline.conf`
-    * Link: `~/.config/tmux/macos.conf` -> `files/tmux/tmux/macos.conf`
-
-## 07 - Others
-
-### Extras Utils
-
-* bat
-    * `cargo install --locked bat`
-* exa
-    * `cargo install exa`
-* delta
-    * `cargo install git-delta`
-
-### Optional Utils
-
-* jq
-* dust
-* procs
-* duf
