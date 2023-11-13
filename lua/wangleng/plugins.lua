@@ -223,6 +223,7 @@ require("lazy").setup({
                     "c", "cpp", "cmake",
                     "rust", "toml",
                     "go", "gomod",
+                    "zig",
                 },
                 -- install parsers synchronously (only applied to `ensure_installed`)
                 sync_install = false,
@@ -328,6 +329,7 @@ require("lazy").setup({
                     'lua_ls',
                     'clangd',
                     'gopls',
+                    'zls',
                 },
                 handlers = {
                     lsp_zero.default_setup,
