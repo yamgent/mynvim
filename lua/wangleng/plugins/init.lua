@@ -1,23 +1,7 @@
------ BOOTSTRAP LAZY.NVIM -----
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    print("Bootstrapping lazy.nvim")
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
-end
-vim.opt.rtp:prepend(lazypath)
-
 -- lazy.nvim default priority is 50
 local colorSchemePriority = 100
 
------ SETUP -----
-require("lazy").setup({
+return {
     -- Create ending brackets when starting bracket is entered
     {
         'windwp/nvim-autopairs',
@@ -649,4 +633,4 @@ require("lazy").setup({
             -- vim.cmd('colorscheme darcula')
         end
     },
-})
+}

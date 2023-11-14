@@ -1,2 +1,2 @@
 require("wangleng.basic")
-require("wangleng.plugins")
+require("wangleng.lazy")
