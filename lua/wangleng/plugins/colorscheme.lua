@@ -11,7 +11,6 @@ return {
             -- vim.cmd('colorscheme gruvbox')
         end
     },
-    -- THEME: tokyonight
     {
         'folke/tokyonight.nvim',
         priority = colorSchemePriority,
@@ -20,7 +19,6 @@ return {
             -- vim.cmd('colorscheme tokyonight-night')
         end
     },
-    -- THEME: vscode
     {
         'Mofiqul/vscode.nvim',
         priority = colorSchemePriority,
@@ -29,7 +27,6 @@ return {
             -- vim.cmd('colorscheme vscode')
         end
     },
-    -- THEME: onedark
     {
         'navarasu/onedark.nvim',
         priority = colorSchemePriority,
@@ -38,7 +35,6 @@ return {
             -- vim.cmd('colorscheme onedark')
         end
     },
-    -- THEME: kanagawa
     {
         'rebelot/kanagawa.nvim',
         priority = colorSchemePriority,
@@ -47,7 +43,6 @@ return {
             vim.cmd('colorscheme kanagawa')
         end
     },
-    -- THEME: darcula
     {
         'doums/darcula',
         priority = colorSchemePriority,
