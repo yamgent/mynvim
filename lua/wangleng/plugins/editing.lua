@@ -5,18 +5,6 @@ return {
         event = "InsertEnter",
         opts = {} -- equivalent to: require("nvim-autopairs").setup({})
     },
-    -- Git added/modified/removed signs/lines at the line number guide
-    {
-        'lewis6991/gitsigns.nvim',
-        opts = {}
-    },
-    -- Git lens per line
-    {
-        'APZelos/blamer.nvim',
-        config = function()
-            vim.g.blamer_enabled = 1
-        end
-    },
     -- colorize HTML color codes, or even basic colors like red
     {
         'NvChad/nvim-colorizer.lua',
