@@ -1,6 +1,3 @@
--- lazy.nvim default priority is 50
-local colorSchemePriority = 100
-
 return {
     -- Create ending brackets when starting bracket is entered
     {
@@ -575,62 +572,6 @@ return {
                     runInTerminal = false,
                 }
             }
-        end
-    },
-
-    --- FANCY THEMES!
-    -- THEME: gruvbox
-    {
-        'morhetz/gruvbox',
-        priority = colorSchemePriority,
-        lazy = false,
-        config = function()
-            -- vim.cmd('colorscheme gruvbox')
-        end
-    },
-    -- THEME: tokyonight
-    {
-        'folke/tokyonight.nvim',
-        priority = colorSchemePriority,
-        lazy = false,
-        config = function()
-            -- vim.cmd('colorscheme tokyonight-night')
-        end
-    },
-    -- THEME: vscode
-    {
-        'Mofiqul/vscode.nvim',
-        priority = colorSchemePriority,
-        lazy = false,
-        config = function()
-            -- vim.cmd('colorscheme vscode')
-        end
-    },
-    -- THEME: onedark
-    {
-        'navarasu/onedark.nvim',
-        priority = colorSchemePriority,
-        lazy = false,
-        config = function()
-            -- vim.cmd('colorscheme onedark')
-        end
-    },
-    -- THEME: kanagawa
-    {
-        'rebelot/kanagawa.nvim',
-        priority = colorSchemePriority,
-        lazy = false,
-        config = function()
-            vim.cmd('colorscheme kanagawa')
-        end
-    },
-    -- THEME: darcula
-    {
-        'doums/darcula',
-        priority = colorSchemePriority,
-        lazy = false,
-        config = function()
-            -- vim.cmd('colorscheme darcula')
         end
     },
 }
