@@ -19,12 +19,12 @@ return {
     -- draw guide lines for indents
     {
         "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
         config = function()
             vim.opt.list = true
 
-            require("indent_blankline").setup {
-                show_current_context = true,
-                show_current_context_start = true,
+            require("ibl").setup {
+                indent = { char = "▏" },
             }
         end
     },
