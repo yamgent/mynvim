@@ -233,7 +233,6 @@ return {
     -- lsp: lsp update messages
     {
         "j-hui/fidget.nvim",
-        tag = "legacy",
         event = "LspAttach",
         opts = {
             -- options
