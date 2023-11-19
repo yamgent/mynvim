@@ -11,14 +11,10 @@ return {
     },
     -- Git added/modified/removed signs/lines at the line number guide
     {
-        'lewis6991/gitsigns.nvim',
-        opts = {}
-    },
-    -- Git lens per line
-    {
-        'APZelos/blamer.nvim',
-        config = function()
-            vim.g.blamer_enabled = 1
-        end
+        'yamgent/gitsigns.nvim',
+        branch = 'fix-gitsigns-attach',
+        opts = {
+            current_line_blame = true,
+        },
     },
 }
