@@ -12,10 +12,7 @@ return {
     -- Git added/modified/removed signs/lines at the line number guide
     -- and git lens blame
     {
-        -- TODO: Check whether `lewis6991/gitsigns.nvim` fixed the attach issue
-        -- https://github.com/lewis6991/gitsigns.nvim/issues/903
-        'yamgent/gitsigns.nvim',
-        branch = 'fix-gitsigns-attach',
+        'lewis6991/gitsigns.nvim',
         opts = {
             current_line_blame = true,
         },
