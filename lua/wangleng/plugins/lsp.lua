@@ -7,14 +7,6 @@ return {
         },
         config = function()
             vim.opt.signcolumn = 'yes'
-
-            -- format on save
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                pattern = "*",
-                callback = function()
-                    vim.lsp.buf.format()
-                end
-            })
         end
     },
     -- lsp: glue code
@@ -189,18 +181,43 @@ return {
             }
         end
     },
-    -- lsp: for prettier (make prettier become an lsp server)
+    -- lsp: formatting
     {
-        'jose-elias-alvarez/null-ls.nvim',
-        dependencies = {
-            { 'nvim-lua/plenary.nvim' },
-        },
+        'stevearc/conform.nvim',
         config = function()
-            local null_ls = require('null-ls')
-            null_ls.setup({
-                sources = {
-                    null_ls.builtins.formatting.prettierd
-                }
+            -- second layer nesting is an either-or
+            -- e.g. formatter = { "eslint", { "prettierd", "prettier" }}
+            -- means: eslint AND (prettierd OR prettier)
+            local prettier = { "prettierd", "prettier" }
+            local eslint = "eslint_d"
+            local web_formatters = { eslint, prettier }
+
+            require("conform").setup({
+                formatters_by_ft = {
+                    javascript = web_formatters,
+                    javascriptreact = web_formatters,
+                    typescript = web_formatters,
+                    typescriptreact = web_formatters,
+                    html = { prettier },
+                    vue = web_formatters,
+                    svelte = web_formatters,
+                    json = { prettier },
+                    css = web_formatters,
+                },
+            })
+
+            -- format on save
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                pattern = "*",
+                callback = function(args)
+                    require("conform").format({
+                        bufnr = args.buf,
+                        -- so that we don't have to manually set it up
+                        -- for other languages like rust, go, etc...
+                        -- which already know how to format
+                        lsp_fallback = true,
+                    })
+                end,
             })
         end
     },
