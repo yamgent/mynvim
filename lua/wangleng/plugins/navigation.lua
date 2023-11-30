@@ -29,6 +29,13 @@ return {
                 })
             end, { silent = true })
 
+            -- additional: search word under cursor
+            keyset("n", "<leader>q", function()
+                require "telescope.builtin".grep_string({
+                    layout_strategy = 'vertical',
+                })
+            end, { silent = true })
+
             -- additional: symbol searches
             keyset("n", "<leader>s", function() require "telescope.builtin".lsp_document_symbols() end)
             keyset("n", "<leader>S", function() require "telescope.builtin".lsp_workspace_symbols() end)
@@ -116,3 +123,4 @@ return {
         end
     },
 }
+
