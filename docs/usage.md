@@ -11,3 +11,6 @@ doing the following:
 ```sh
 git config --local --add vim.blockfugitive 1
 ```
+
+> Note: If you did not use the block and encounter the freezing issue, you can 
+> also just use `<C-c>` to interrupt vim-fugitive and stop the freeze.
