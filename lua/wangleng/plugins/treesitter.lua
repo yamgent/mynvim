@@ -10,7 +10,7 @@ return {
                 ensure_installed = {
                     "vim", "lua", "vimdoc",
                     "gitcommit", "gitignore",
-                    "javascript", "typescript", "tsx", "css", "scss", "html", "vue", "svelte", "yaml",
+                    "javascript", "typescript", "tsx", "css", "scss", "html", "vue", "svelte", "yaml", "jsdoc",
                     "json", "jsonc",
                     "python",
                     "c", "cpp", "cmake",
@@ -28,3 +28,4 @@ return {
         end
     },
 }
+
