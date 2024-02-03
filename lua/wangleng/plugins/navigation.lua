@@ -30,15 +30,21 @@ return {
             end, { silent = true })
 
             -- additional: search word under cursor
-            keyset("n", "<leader>q", function()
+            keyset("n", "<leader>F", function()
                 require "telescope.builtin".grep_string({
                     layout_strategy = 'vertical',
                 })
             end, { silent = true })
 
             -- additional: symbol searches
-            keyset("n", "<leader>s", function() require "telescope.builtin".lsp_document_symbols() end)
-            keyset("n", "<leader>S", function() require "telescope.builtin".lsp_workspace_symbols() end)
+            keyset("n", "<leader>qs", function() require "telescope.builtin".lsp_document_symbols() end)
+            keyset("n", "<leader>qS", function() require "telescope.builtin".lsp_workspace_symbols() end)
+
+            -- additional: help searches
+            keyset("n", "<leader>qh", function() require "telescope.builtin".help_tags() end)
+
+            -- additional: commands
+            keyset("n", "<leader>qp", function() require "telescope.builtin".commands() end)
         end,
     },
     -- better algorithm for Ctrl-P
@@ -106,7 +112,7 @@ return {
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
             local keyset = vim.keymap.set
-            keyset("n", "<leader>F", function() require('spectre').open() end)
+            keyset("n", "<leader>qf", function() require('spectre').open() end)
         end
     },
     -- file jump list (harpoon)
@@ -123,4 +129,3 @@ return {
         end
     },
 }
-
