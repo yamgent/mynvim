@@ -30,7 +30,7 @@ return {
             end, { silent = true })
 
             -- additional: search word under cursor
-            keyset("n", "<leader>q", function()
+            keyset("n", "<leader>F", function()
                 require "telescope.builtin".grep_string({
                     layout_strategy = 'vertical',
                 })
@@ -106,7 +106,7 @@ return {
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
             local keyset = vim.keymap.set
-            keyset("n", "<leader>F", function() require('spectre').open() end)
+            keyset("n", "<leader>qf", function() require('spectre').open() end)
         end
     },
     -- file jump list (harpoon)
@@ -123,4 +123,3 @@ return {
         end
     },
 }
-
