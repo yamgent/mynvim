@@ -31,6 +31,7 @@ return {
                 keyset("n", "<C-j>", function() vim.diagnostic.goto_next() end, opts)
                 keyset("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
                 keyset("n", "<leader>a", function() vim.lsp.buf.code_action() end, opts)
+                keyset("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
             end)
 
             -- need to be called after extend_lspconfig(), otherwise the diagnostic display doesn't work
@@ -268,3 +269,4 @@ return {
         }
     },
 }
+
