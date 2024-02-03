@@ -14,9 +14,9 @@ return {
             keyset('n', '<F9>', function() dap.step_into() end)
             keyset('n', '<F10>', function() dap.step_over() end)
             keyset('n', '<F11>', function() dap.step_out() end)
-            keyset('n', '<Leader>b', function() dap.toggle_breakpoint() end)
-            keyset('n', '<Leader>B', function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end)
-            keyset('n', '<Leader>lp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+            keyset('n', '<Leader>db', function() dap.toggle_breakpoint() end)
+            keyset('n', '<Leader>dB', function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end)
+            keyset('n', '<Leader>dlp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
             keyset('n', '<Leader>dl', function() dap.run_last() end)
 
             -- backup shortcuts in case F keys not readily available (e.g Mac with Touch Bar :/)
