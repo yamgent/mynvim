@@ -39,6 +39,12 @@ return {
             -- additional: symbol searches
             keyset("n", "<leader>qs", function() require "telescope.builtin".lsp_document_symbols() end)
             keyset("n", "<leader>qS", function() require "telescope.builtin".lsp_workspace_symbols() end)
+
+            -- additional: help searches
+            keyset("n", "<leader>qh", function() require "telescope.builtin".help_tags() end)
+
+            -- additional: commands
+            keyset("n", "<leader>qp", function() require "telescope.builtin".commands() end)
         end,
     },
     -- better algorithm for Ctrl-P
