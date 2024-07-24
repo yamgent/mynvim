@@ -218,7 +218,7 @@ return {
                         -- so that we don't have to manually set it up
                         -- for other languages like rust, go, etc...
                         -- which already know how to format
-                        lsp_fallback = true,
+                        lsp_format = 'fallback',
                     })
                 end,
             })
@@ -271,4 +271,3 @@ return {
         }
     },
 }
-
