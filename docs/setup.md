@@ -5,9 +5,10 @@
 ### Common
 * Rust
     * Rationale: Mainly for compiling
-* Clang
-    * Plugin users: Treesitter
-    * Note: For Windows, setting up `PATH` is essential so that Treesitter can access clang. For more details, see [Treesitter Wiki](https://github.com/nvim-treesitter/nvim-treesitter/wiki/Windows-support) ("Through Visual Studio")
+* Clang (non-Windows only)
+    * Plugin users: Treesiiter
+* Zig (Windows only)
+    * Plugin users: Treesitter (clang is a pain to setup on Windows)
 * Nodejs
     * Plugin users: Lsp
 * Nerd Fonts

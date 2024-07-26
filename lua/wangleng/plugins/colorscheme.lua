@@ -4,11 +4,11 @@ local colorSchemePriority = 1000
 
 return {
     {
-        'morhetz/gruvbox',
+        'sainnhe/gruvbox-material',
         priority = colorSchemePriority,
         lazy = false,
         config = function()
-            -- vim.cmd('colorscheme gruvbox')
+            vim.cmd('colorscheme gruvbox-material')
         end
     },
     {
@@ -40,7 +40,7 @@ return {
         priority = colorSchemePriority,
         lazy = false,
         config = function()
-            vim.cmd('colorscheme kanagawa')
+            -- vim.cmd('colorscheme kanagawa')
         end
     },
     {

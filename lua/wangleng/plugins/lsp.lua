@@ -188,24 +188,45 @@ return {
     {
         'stevearc/conform.nvim',
         config = function()
-            -- second layer nesting is an either-or
-            -- e.g. formatter = { "eslint", { "prettierd", "prettier" }}
-            -- means: eslint AND (prettierd OR prettier)
-            local prettier = { "prettierd", "prettier" }
-            local eslint = "eslint_d"
-            local web_formatters = { eslint, prettier }
+            ---Selects the first available formatter.
+            ---
+            ---@param bufnr integer
+            ---@param ... string
+            ---@return string
+            local function first(bufnr, ...)
+                local conform = require("conform")
+                for i = 1, select("#", ...) do
+                    local formatter = select(i, ...)
+                    if conform.get_formatter_info(formatter, bufnr).available then
+                        return formatter
+                    end
+                end
+                return select(1, ...)
+            end
+
+            local function select_prettier(bufnr)
+                return first(bufnr, "prettierd", "prettier")
+            end
+
+            local function use_prettier(bufnr)
+                return { select_prettier(bufnr) }
+            end
+
+            local function use_web_formatters(bufnr)
+                return { "eslint_d", select_prettier(bufnr) }
+            end
 
             require("conform").setup({
                 formatters_by_ft = {
-                    javascript = web_formatters,
-                    javascriptreact = web_formatters,
-                    typescript = web_formatters,
-                    typescriptreact = web_formatters,
-                    html = { prettier },
-                    vue = web_formatters,
-                    svelte = web_formatters,
-                    json = { prettier },
-                    css = web_formatters,
+                    javascript = use_web_formatters,
+                    javascriptreact = use_web_formatters,
+                    typescript = use_web_formatters,
+                    typescriptreact = use_web_formatters,
+                    html = use_prettier,
+                    vue = use_web_formatters,
+                    svelte = use_web_formatters,
+                    json = use_prettier,
+                    css = use_web_formatters,
                 },
             })
 
@@ -218,7 +239,7 @@ return {
                         -- so that we don't have to manually set it up
                         -- for other languages like rust, go, etc...
                         -- which already know how to format
-                        lsp_fallback = true,
+                        lsp_format = 'fallback',
                     })
                 end,
             })
@@ -271,4 +292,3 @@ return {
         }
     },
 }
-
