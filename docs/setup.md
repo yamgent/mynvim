@@ -40,7 +40,7 @@ sudo apt install unzip
 
 ## 01 - Install Neovim
 
-(Note: Minimum version required: v0.9.2)
+(Note: Minimum version required: v0.10.1)
 
 * Windows:
 
