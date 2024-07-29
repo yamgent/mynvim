@@ -1,3 +1,3 @@
 # mynvim
 
-Version: `24.02.0` (Banana)
+Version: `24.07.0` (Citrus)
