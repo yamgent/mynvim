@@ -90,6 +90,7 @@ return {
                     'clangd',
                     'gopls',
                     'zls',
+                    'tailwindcss',
                 },
                 handlers = {
                     lsp_zero.default_setup,
