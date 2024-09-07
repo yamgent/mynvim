@@ -60,3 +60,4 @@ local keyset = vim.keymap.set
 keyset("n", "<leader>c", '"+yy');
 keyset("v", "<leader>c", '"+y');
 keyset("n", "<leader>v", '"+p');
+keyset("v", "<leader>v", '"+p');
