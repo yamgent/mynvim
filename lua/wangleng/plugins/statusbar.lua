@@ -13,6 +13,16 @@ return {
             },
             inactive_winbar = {
                 lualine_b = { 'filename' },
+            },
+            sections = {
+                lualine_c = {
+                    {
+                        'filename',
+                        -- mainly for oil.nvim (otherwise we just see "[No Name]")
+                        -- anyway the default nvim also shows relative path
+                        path = 1
+                    },
+                },
             }
         }
     },

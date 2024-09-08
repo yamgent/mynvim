@@ -57,6 +57,22 @@ return {
     },
     -- file browser
     {
+        "stevearc/oil.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            require("oil").setup({
+                keymaps = {
+                    ["<C-p>"] = false,
+                    ["<C-y>"] = "actions.preview",
+                }
+            })
+
+            local keyset = vim.keymap.set
+            keyset("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory (oil)", silent = true })
+        end,
+    },
+    -- file browser (floating)
+    {
         "nvim-telescope/telescope-file-browser.nvim",
         dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
         config = function()
@@ -65,12 +81,12 @@ return {
 
             telescope.load_extension('file_browser')
             -- show current file's directory
-            keyset("n", "<leader>e",
+            keyset("n", "<leader>qe",
                 function() telescope.extensions.file_browser.file_browser({ path = "%:p:h", }) end,
                 { silent = true }
             )
             -- show project's root directory
-            keyset("n", "<leader>E",
+            keyset("n", "<leader>qE",
                 function() telescope.extensions.file_browser.file_browser() end,
                 { silent = true }
             )
@@ -91,7 +107,7 @@ return {
                     filtered_items = {
                         hide_dotfiles = false,
                     },
-                    hijack_netrw_behavior = "open_current",
+                    hijack_netrw_behavior = "disabled",
                     window = {
                         mappings = {
                             ["h"] = "close_node",
