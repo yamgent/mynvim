@@ -81,12 +81,12 @@ return {
 
             telescope.load_extension('file_browser')
             -- show current file's directory
-            keyset("n", "<leader>qe",
+            keyset("n", "<leader>e",
                 function() telescope.extensions.file_browser.file_browser({ path = "%:p:h", }) end,
                 { silent = true }
             )
             -- show project's root directory
-            keyset("n", "<leader>qE",
+            keyset("n", "<leader>E",
                 function() telescope.extensions.file_browser.file_browser() end,
                 { silent = true }
             )
