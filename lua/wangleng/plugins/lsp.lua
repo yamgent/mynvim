@@ -82,7 +82,7 @@ return {
             require('mason-lspconfig').setup({
                 ensure_installed = {
                     'rust_analyzer',
-                    'tsserver',
+                    'ts_ls',
                     'eslint',
                     'jsonls',
                     'cssls',
@@ -99,9 +99,9 @@ return {
                         local lua_opts = lsp_zero.nvim_lua_ls()
                         require('lspconfig').lua_ls.setup(lua_opts)
                     end,
-                    tsserver = function()
+                    ts_ls = function()
                         -- typescript inlay hints need to be manually enabled
-                        require('lspconfig').tsserver.setup({
+                        require('lspconfig').ts_ls.setup({
                             settings = {
                                 typescript = {
                                     inlayHints = {
