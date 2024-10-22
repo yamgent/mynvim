@@ -24,10 +24,16 @@ return {
                     live_grep_args = {
                         mappings = {
                             i = {
+                                -- wrap text with quotes
                                 ["<C-k>"] = lga_actions.quote_prompt(),
-                                ["<C-i>"] = lga_actions.quote_prompt({ postfix = " -s " }),
+                                -- wrap text with quotes + case insensitive
+                                ["<C-i>"] = lga_actions.quote_prompt({ postfix = " -i " }),
+                                -- wrap text with quotes + limit to files (via glob regex syntax)
                                 ["<C-d>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+                                -- wrap text with quotes + disable regex
                                 ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -F " }),
+                                -- wrap text with quotes + enforce case sensitive
+                                ["<C-u>"] = lga_actions.quote_prompt({ postfix = " -s " }),
                                 -- freeze the current list and start a fuzzy search in the frozen list
                                 ["<C-space>"] = lga_actions.to_fuzzy_refine,
                             }
