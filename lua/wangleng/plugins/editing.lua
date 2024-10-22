@@ -30,6 +30,4 @@ return {
     },
     -- tpope: surround
     'tpope/vim-surround',
-    -- tpope: comment
-    'tpope/vim-commentary',
 }
