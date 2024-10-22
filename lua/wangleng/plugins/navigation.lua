@@ -3,9 +3,46 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.4',
-        dependencies = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons' },
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-tree/nvim-web-devicons',
+
+            -- extra extensions
+            {
+                "nvim-telescope/telescope-live-grep-args.nvim",
+                -- This will not install any breaking changes.
+                -- For major updates, this must be adjusted manually.
+                version = "^1.0.0",
+            }
+        },
         config = function()
-            require('telescope').setup()
+            local telescope = require('telescope')
+            local lga_actions = require('telescope-live-grep-args.actions')
+
+            telescope.setup({
+                extensions = {
+                    live_grep_args = {
+                        mappings = {
+                            i = {
+                                -- wrap text with quotes
+                                ["<C-k>"] = lga_actions.quote_prompt(),
+                                -- wrap text with quotes + case insensitive
+                                ["<C-i>"] = lga_actions.quote_prompt({ postfix = " -i " }),
+                                -- wrap text with quotes + limit to files (via glob regex syntax)
+                                ["<C-d>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+                                -- wrap text with quotes + disable regex
+                                ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -F " }),
+                                -- wrap text with quotes + enforce case sensitive
+                                ["<C-u>"] = lga_actions.quote_prompt({ postfix = " -s " }),
+                                -- freeze the current list and start a fuzzy search in the frozen list
+                                ["<C-space>"] = lga_actions.to_fuzzy_refine,
+                            }
+                        }
+                    }
+                }
+            })
+            telescope.load_extension('live_grep_args')
+
             local keyset = vim.keymap.set
 
             local project_files = function()
@@ -24,14 +61,19 @@ return {
 
             -- additional: live grep
             keyset("n", "<leader>f", function()
-                require "telescope.builtin".live_grep({
+                require "telescope".extensions.live_grep_args.live_grep_args({
                     layout_strategy = 'vertical',
                 })
             end, { silent = true })
 
             -- additional: search word under cursor
             keyset("n", "<leader>F", function()
-                require "telescope.builtin".grep_string({
+                require "telescope-live-grep-args.shortcuts".grep_word_under_cursor({
+                    layout_strategy = 'vertical',
+                })
+            end, { silent = true })
+            keyset("v", "<leader>F", function()
+                require "telescope-live-grep-args.shortcuts".grep_visual_selection({
                     layout_strategy = 'vertical',
                 })
             end, { silent = true })
