@@ -57,22 +57,22 @@ return {
                 })
             end
 
-            keyset("n", "<C-p>", function() project_files() end, { silent = true })
+            keyset("n", "<leader>f", function() project_files() end, { silent = true })
 
             -- additional: live grep
-            keyset("n", "<leader>f", function()
+            keyset("n", "<leader>/", function()
                 require "telescope".extensions.live_grep_args.live_grep_args({
                     layout_strategy = 'vertical',
                 })
             end, { silent = true })
 
             -- additional: search word under cursor
-            keyset("n", "<leader>F", function()
+            keyset("n", "<leader>;", function()
                 require "telescope-live-grep-args.shortcuts".grep_word_under_cursor({
                     layout_strategy = 'vertical',
                 })
             end, { silent = true })
-            keyset("v", "<leader>F", function()
+            keyset("v", "<leader>;", function()
                 require "telescope-live-grep-args.shortcuts".grep_visual_selection({
                     layout_strategy = 'vertical',
                 })
