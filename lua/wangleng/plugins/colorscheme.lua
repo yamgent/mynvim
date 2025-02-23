@@ -8,7 +8,7 @@ return {
         priority = colorSchemePriority,
         lazy = false,
         config = function()
-            vim.cmd('colorscheme gruvbox-material')
+            -- vim.cmd('colorscheme gruvbox-material')
         end
     },
     {
@@ -32,7 +32,7 @@ return {
         priority = colorSchemePriority,
         lazy = false,
         config = function()
-            -- vim.cmd('colorscheme onedark')
+            vim.cmd('colorscheme onedark')
         end
     },
     {
