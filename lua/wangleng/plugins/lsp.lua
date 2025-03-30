@@ -29,9 +29,6 @@ return {
                 local keyset = vim.keymap.set
                 keyset("n", "<C-k>", function() vim.diagnostic.goto_prev() end, opts)
                 keyset("n", "<C-j>", function() vim.diagnostic.goto_next() end, opts)
-                keyset("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
-                keyset("n", "<leader>a", function() vim.lsp.buf.code_action() end, opts)
-                keyset("v", "<leader>a", function() vim.lsp.buf.code_action() end, opts)
 
                 keyset("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
                 keyset("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
