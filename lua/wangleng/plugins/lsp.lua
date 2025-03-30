@@ -27,8 +27,8 @@ return {
 
                 local opts = { buffer = bufnr, remap = false }
                 local keyset = vim.keymap.set
-                keyset("n", "<C-k>", function() vim.diagnostic.goto_prev() end, opts)
-                keyset("n", "<C-j>", function() vim.diagnostic.goto_next() end, opts)
+                keyset("n", "<C-k>", function() vim.diagnostic.jump({ count = -1 }) end, opts)
+                keyset("n", "<C-j>", function() vim.diagnostic.jump({ count = 1 }) end, opts)
 
                 keyset("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
                 keyset("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
