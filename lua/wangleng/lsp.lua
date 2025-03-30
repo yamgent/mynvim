@@ -1,4 +1,10 @@
 vim.lsp.inlay_hint.enable()
 
--- opt-in as of neovim 0.11.0
-vim.diagnostic.config({ virtual_text = true })
+vim.diagnostic.config({
+    -- for all lines, just show the error at the back
+    virtual_text = true,
+    virtual_lines = {
+        -- only show virtual line diagnostics for the current cursor line
+        current_line = true,
+    },
+})
