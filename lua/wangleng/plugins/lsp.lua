@@ -27,11 +27,8 @@ return {
 
                 local opts = { buffer = bufnr, remap = false }
                 local keyset = vim.keymap.set
-                keyset("n", "<C-k>", function() vim.diagnostic.goto_prev() end, opts)
-                keyset("n", "<C-j>", function() vim.diagnostic.goto_next() end, opts)
-                keyset("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
-                keyset("n", "<leader>a", function() vim.lsp.buf.code_action() end, opts)
-                keyset("v", "<leader>a", function() vim.lsp.buf.code_action() end, opts)
+                keyset("n", "<C-k>", function() vim.diagnostic.jump({ count = -1 }) end, opts)
+                keyset("n", "<C-j>", function() vim.diagnostic.jump({ count = 1 }) end, opts)
 
                 keyset("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
                 keyset("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
@@ -242,32 +239,6 @@ return {
                         -- which already know how to format
                         lsp_format = 'fallback',
                     })
-                end,
-            })
-        end
-    },
-    -- lsp: inlay hints UI
-    {
-        'lvimuser/lsp-inlayhints.nvim',
-        dependencies = {
-            { 'neovim/nvim-lspconfig' },
-        },
-        config = function()
-            require('lsp-inlayhints').setup()
-
-            -- boilerplate setup code for this plugin, to attach
-            -- hints once LSP is activated
-            vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-            vim.api.nvim_create_autocmd("LspAttach", {
-                group = "LspAttach_inlayhints",
-                callback = function(args)
-                    if not (args.data and args.data.client_id) then
-                        return
-                    end
-
-                    local bufnr = args.buf
-                    local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    require("lsp-inlayhints").on_attach(client, bufnr)
                 end,
             })
         end
