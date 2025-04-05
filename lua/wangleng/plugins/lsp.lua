@@ -16,7 +16,7 @@ return {
             -- fancy symbols in auto-complete
             { 'onsails/lspkind.nvim' },
 
-            -- lua snippets for auto-complete
+            -- snippet functionality
             { 'L3MON4D3/LuaSnip' },
         },
         config = function()
@@ -92,7 +92,7 @@ return {
                 },
                 snippet = {
                     expand = function(args)
-                        -- LuaSnip snippets
+                        -- LuaSnip snippets functionality
                         require('luasnip').lsp_expand(args.body)
                     end,
                 },
