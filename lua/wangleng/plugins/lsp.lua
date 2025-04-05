@@ -29,6 +29,12 @@ return {
             -- make hover window (the window when you press K) round bordered
             -- needed because currently Telescope does not handle `vim.opt.winborder = 'rounded'` correctly
             -- so a workaround is to manually override hover instead
+            --
+            -- might be worth re-visiting this again after
+            -- https://github.com/nvim-telescope/telescope.nvim/issues/3436
+            -- is fixed
+            --
+            -- original mynvim's issue: https://github.com/yamgent/mynvim/issues/56
             local hover = vim.lsp.buf.hover
             ---@diagnostic disable-next-line: duplicate-set-field
             vim.lsp.buf.hover = function()
