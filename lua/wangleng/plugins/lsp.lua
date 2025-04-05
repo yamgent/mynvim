@@ -85,28 +85,24 @@ return {
         dependencies = {
             {
                 'L3MON4D3/LuaSnip',
-                'VonHeikemen/lsp-zero.nvim',
             },
         },
         config = function()
-            local lsp_zero = require('lsp-zero')
-
-            lsp_zero.extend_cmp({
-                set_sources = 'recommended',
-                set_basic_mappings = true,
-                set_extra_mappings = false,
-                use_luasnip = true,
-                set_format = true,
-                documentation_window = true,
-            })
-
             local cmp = require('cmp')
 
             cmp.setup({
-                mapping = {
+                sources = {
+                    { name = 'nvim_lsp' },
+                },
+                snippet = {
+                    expand = function(args)
+                        require('luasnip').lsp_expand(args.body)
+                    end,
+                },
+                mapping = cmp.mapping.preset.insert({
                     ['<CR>'] = cmp.mapping.confirm({ select = true }),
                     ['<C-Space>'] = cmp.mapping.complete(),
-                }
+                })
             })
         end
     },
