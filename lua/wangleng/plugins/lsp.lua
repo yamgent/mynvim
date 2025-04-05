@@ -37,10 +37,15 @@ return {
             -- original mynvim's issue: https://github.com/yamgent/mynvim/issues/56
             local hover = vim.lsp.buf.hover
             ---@diagnostic disable-next-line: duplicate-set-field
-            vim.lsp.buf.hover = function()
-                return hover({
-                    border = "rounded"
-                })
+            vim.lsp.buf.hover = function(config)
+                local final_config = vim.tbl_deep_extend(
+                    'force',
+                    {
+                        border = "rounded"
+                    },
+                    config or {}
+                )
+                return hover(final_config)
             end
 
             -- setup basic keymaps for lsp
