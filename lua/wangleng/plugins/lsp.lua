@@ -9,56 +9,6 @@ return {
             vim.opt.signcolumn = 'yes'
         end
     },
-    -- lsp: glue code
-    {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
-        dependencies = {
-            { 'neovim/nvim-lspconfig' },
-        },
-        config = function()
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_lspconfig()
-
-            lsp_zero.on_attach(function(client, bufnr)
-                -- see :help lsp-zero-keybindings
-                -- to learn the available actions
-                lsp_zero.default_keymaps({ buffer = bufnr })
-
-                local opts = { buffer = bufnr, remap = false }
-                local keyset = vim.keymap.set
-                keyset("n", "<C-k>", function() vim.diagnostic.jump({ count = -1 }) end, opts)
-                keyset("n", "<C-j>", function() vim.diagnostic.jump({ count = 1 }) end, opts)
-
-                keyset("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-                keyset("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-            end)
-
-            -- need to be called after extend_lspconfig(), otherwise the diagnostic display doesn't work
-            vim.diagnostic.config({
-                virtual_text = true,
-                signs = true,
-                update_in_insert = false,
-                underline = true,
-                severity_sort = true,
-                float = {
-                    focusable = true,
-                    style = "minimal",
-                    border = "rounded",
-                    source = "always",
-                    header = "",
-                    prefix = "",
-                    format = function(d)
-                        local code = d.code or (d.user_data and d.user_data.lsp.code)
-                        if code then
-                            return string.format("%s [%s]", d.message, code):gsub("1. ", "")
-                        end
-                        return d.message
-                    end,
-                },
-            })
-        end
-    },
     -- mason: manager for LSP, DAP, formatters, etc...
     {
         'williamboman/mason.nvim',
