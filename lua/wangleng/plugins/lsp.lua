@@ -26,6 +26,28 @@ return {
 
             vim.lsp.inlay_hint.enable()
 
+            -- make hover window (the window when you press K) round bordered
+            -- needed because currently Telescope does not handle `vim.opt.winborder = 'rounded'` correctly
+            -- so a workaround is to manually override hover instead
+            --
+            -- might be worth re-visiting this again after
+            -- https://github.com/nvim-telescope/telescope.nvim/issues/3436
+            -- is fixed
+            --
+            -- original mynvim's issue: https://github.com/yamgent/mynvim/issues/56
+            local hover = vim.lsp.buf.hover
+            ---@diagnostic disable-next-line: duplicate-set-field
+            vim.lsp.buf.hover = function(config)
+                local final_config = vim.tbl_deep_extend(
+                    'force',
+                    {
+                        border = "rounded"
+                    },
+                    config or {}
+                )
+                return hover(final_config)
+            end
+
             -- setup basic keymaps for lsp
             vim.api.nvim_create_autocmd('LspAttach', {
                 callback = function(args)
@@ -34,8 +56,8 @@ return {
                     keyset("n", "<C-k>", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
                     keyset("n", "<C-j>", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
 
-                    keyset("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-                    keyset("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+                    keyset("n", "<C-h>", function() vim.lsp.buf.signature_help({ border = "rounded" }) end, opts)
+                    keyset("i", "<C-h>", function() vim.lsp.buf.signature_help({ border = "rounded" }) end, opts)
 
                     keyset("n", "gl", function() vim.diagnostic.open_float() end, opts)
 
