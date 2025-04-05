@@ -38,6 +38,15 @@ return {
                     keyset("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
                     keyset("n", "gl", function() vim.diagnostic.open_float() end, opts)
+
+                    -- the default nvim keybindings for gd and gD does not use LSP capabilities
+                    -- hence, if you try to gd a library's type/method, it does not navigate
+                    -- to the library's source code, since without LSP, nvim does not know
+                    -- how to go to the library's source code
+                    --
+                    -- fix this by overriding the keybindings to use LSP
+                    keyset('n', 'gd', function() vim.lsp.buf.definition() end, opts)
+                    keyset('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
                 end
             })
 
