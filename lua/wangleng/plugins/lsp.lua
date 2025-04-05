@@ -107,12 +107,19 @@ return {
                 }
             })
 
-            local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-
             -- important: need to init mason before init mason-lspconfig
             require('mason').setup({})
 
             local lspconfig = require('lspconfig')
+
+            -- Add cmp_nvim_lsp capabilities settings to lspconfig
+            -- This should be executed before you configure any language server
+            local lspconfig_defaults = lspconfig.util.default_config
+            lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+                'force',
+                lspconfig_defaults.capabilities,
+                require('cmp_nvim_lsp').default_capabilities()
+            )
 
             require('mason-lspconfig').setup({
                 ensure_installed = {
@@ -130,10 +137,7 @@ return {
                 handlers = {
                     -- default handler
                     function(server_name)
-                        lspconfig[server_name].setup({
-                            -- advertise lsp capabilities support by nvim-cmp
-                            capabilities = lsp_capabilities,
-                        })
+                        lspconfig[server_name].setup({})
                     end,
                     lua_ls = function()
                         local runtime_path = vim.split(package.path, ';')
