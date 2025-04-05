@@ -1,42 +1,62 @@
 return {
-    -- lsp
+    -- lsp configuration (mainly through mason)
     {
-        'neovim/nvim-lspconfig',
+        'williamboman/mason-lspconfig.nvim',
         dependencies = {
-            { 'hrsh7th/cmp-nvim-lsp' },
-        },
-        config = function()
-            vim.opt.signcolumn = 'yes'
-        end
-    },
-    -- lsp: glue code
-    {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
-        dependencies = {
+            -- mason: manager for LSP, DAP, formatters, etc...
+            { 'williamboman/mason.nvim' },
+
+            -- neovim's lspconfig API
             { 'neovim/nvim-lspconfig' },
+
+            -- auto-complete functionality
+            { 'hrsh7th/nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp' },
+
+            -- fancy symbols in auto-complete
+            { 'onsails/lspkind.nvim' },
+
+            -- snippet functionality
+            { 'L3MON4D3/LuaSnip' },
         },
         config = function()
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_lspconfig()
+            -- reserve a space in the gutter
+            -- this will avoid an annoying layout shift in the screen
+            vim.opt.signcolumn = 'yes'
 
-            lsp_zero.on_attach(function(client, bufnr)
-                -- see :help lsp-zero-keybindings
-                -- to learn the available actions
-                lsp_zero.default_keymaps({ buffer = bufnr })
+            vim.lsp.inlay_hint.enable()
 
-                local opts = { buffer = bufnr, remap = false }
-                local keyset = vim.keymap.set
-                keyset("n", "<C-k>", function() vim.diagnostic.jump({ count = -1 }) end, opts)
-                keyset("n", "<C-j>", function() vim.diagnostic.jump({ count = 1 }) end, opts)
+            -- setup basic keymaps for lsp
+            vim.api.nvim_create_autocmd('LspAttach', {
+                callback = function(args)
+                    local opts = { buffer = args.buf, remap = false }
+                    local keyset = vim.keymap.set
+                    keyset("n", "<C-k>", function() vim.diagnostic.jump({ count = -1 }) end, opts)
+                    keyset("n", "<C-j>", function() vim.diagnostic.jump({ count = 1 }) end, opts)
 
-                keyset("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-                keyset("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-            end)
+                    keyset("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+                    keyset("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
-            -- need to be called after extend_lspconfig(), otherwise the diagnostic display doesn't work
+                    keyset("n", "gl", function() vim.diagnostic.open_float() end, opts)
+
+                    -- the default nvim keybindings for gd and gD does not use LSP capabilities
+                    -- hence, if you try to gd a library's type/method, it does not navigate
+                    -- to the library's source code, since without LSP, nvim does not know
+                    -- how to go to the library's source code
+                    --
+                    -- fix this by overriding the keybindings to use LSP
+                    keyset('n', 'gd', function() vim.lsp.buf.definition() end, opts)
+                    keyset('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
+                end
+            })
+
             vim.diagnostic.config({
+                -- for all lines, just show the error at the back
                 virtual_text = true,
+                virtual_lines = {
+                    -- only show virtual line diagnostics for the current cursor line
+                    current_line = true,
+                },
                 signs = true,
                 update_in_insert = false,
                 underline = true,
@@ -57,24 +77,49 @@ return {
                     end,
                 },
             })
-        end
-    },
-    -- mason: manager for LSP, DAP, formatters, etc...
-    {
-        'williamboman/mason.nvim',
-        opts = {},
-    },
-    -- mason configuration
-    {
-        'williamboman/mason-lspconfig.nvim',
-        dependencies = {
-            { 'VonHeikemen/lsp-zero.nvim' },
-            { 'neovim/nvim-lspconfig' },
-            { 'williamboman/mason.nvim' },
-        },
-        config = function()
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_lspconfig()
+
+            -- for fancy symbols in auto-complete
+            local lspkind = require('lspkind')
+            lspkind.init({
+                mode = 'symbol_text'
+            })
+
+            -- setup auto-complete
+            local cmp = require('cmp')
+            cmp.setup({
+                sources = {
+                    { name = 'nvim_lsp' },
+                },
+                snippet = {
+                    expand = function(args)
+                        -- LuaSnip snippets functionality
+                        require('luasnip').lsp_expand(args.body)
+                    end,
+                },
+                mapping = cmp.mapping.preset.insert({
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                }),
+                formatting = {
+                    format = lspkind.cmp_format({
+                        mode = 'symbol_text'
+                    })
+                }
+            })
+
+            -- important: need to init mason before init mason-lspconfig
+            require('mason').setup({})
+
+            local lspconfig = require('lspconfig')
+
+            -- Add cmp_nvim_lsp capabilities settings to lspconfig
+            -- This should be executed before you configure any language server
+            local lspconfig_defaults = lspconfig.util.default_config
+            lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+                'force',
+                lspconfig_defaults.capabilities,
+                require('cmp_nvim_lsp').default_capabilities()
+            )
 
             require('mason-lspconfig').setup({
                 ensure_installed = {
@@ -90,15 +135,48 @@ return {
                     'zls',
                 },
                 handlers = {
-                    lsp_zero.default_setup,
+                    -- default handler
+                    function(server_name)
+                        lspconfig[server_name].setup({})
+                    end,
                     lua_ls = function()
-                        -- nvim_lua_ls() configures lua_ls to understand neovim config lua
-                        local lua_opts = lsp_zero.nvim_lua_ls()
-                        require('lspconfig').lua_ls.setup(lua_opts)
+                        local runtime_path = vim.split(package.path, ';')
+                        table.insert(runtime_path, 'lua/?.lua')
+                        table.insert(runtime_path, 'lua/?/init.lua')
+
+                        -- lua_opts configures lua_ls to understand neovim config lua
+                        local lua_opts = {
+                            settings = {
+                                Lua = {
+                                    -- Disable telemetry
+                                    telemetry = { enable = false },
+                                    runtime = {
+                                        -- Tell the language server which version of Lua you're using
+                                        -- (most likely LuaJIT in the case of Neovim)
+                                        version = 'LuaJIT',
+                                        path = runtime_path,
+                                    },
+                                    diagnostics = {
+                                        -- Get the language server to recognize the `vim` global
+                                        globals = { 'vim' }
+                                    },
+                                    workspace = {
+                                        checkThirdParty = false,
+                                        library = {
+                                            -- Make the server aware of Neovim runtime files
+                                            vim.fn.expand('$VIMRUNTIME/lua'),
+                                            vim.fn.stdpath('config') .. '/lua'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        lspconfig.lua_ls.setup(lua_opts)
                     end,
                     ts_ls = function()
                         -- typescript inlay hints need to be manually enabled
-                        require('lspconfig').ts_ls.setup({
+                        lspconfig.ts_ls.setup({
                             settings = {
                                 typescript = {
                                     inlayHints = {
@@ -127,59 +205,6 @@ return {
                     end
                 }
             })
-        end
-    },
-    -- lsp: auto completion
-    {
-        'hrsh7th/nvim-cmp',
-        dependencies = {
-            {
-                'L3MON4D3/LuaSnip',
-                'VonHeikemen/lsp-zero.nvim',
-            },
-        },
-        config = function()
-            local lsp_zero = require('lsp-zero')
-
-            lsp_zero.extend_cmp({
-                set_sources = 'recommended',
-                set_basic_mappings = true,
-                set_extra_mappings = false,
-                use_luasnip = true,
-                set_format = true,
-                documentation_window = true,
-            })
-
-            local cmp = require('cmp')
-
-            cmp.setup({
-                mapping = {
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                }
-            })
-        end
-    },
-    -- lsp: fancy symbols in auto-complete
-    {
-        'onsails/lspkind.nvim',
-        dependencies = {
-            { 'hrsh7th/nvim-cmp' },
-        },
-        config = function()
-            local lspkind = require('lspkind')
-            lspkind.init({
-                mode = 'symbol_text'
-            })
-
-            local cmp = require('cmp')
-            cmp.setup {
-                formatting = {
-                    format = lspkind.cmp_format({
-                        mode = 'symbol_text'
-                    })
-                }
-            }
         end
     },
     -- lsp: formatting
