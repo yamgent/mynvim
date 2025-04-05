@@ -20,11 +20,14 @@ return {
             { 'L3MON4D3/LuaSnip' },
         },
         config = function()
+            local keyset = vim.keymap.set
+
             -- reserve a space in the gutter
             -- this will avoid an annoying layout shift in the screen
             vim.opt.signcolumn = 'yes'
 
             vim.lsp.inlay_hint.enable()
+            keyset("n", "<leader>i", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
 
             -- make hover window (the window when you press K) round bordered
             -- needed because currently Telescope does not handle `vim.opt.winborder = 'rounded'` correctly
@@ -52,7 +55,6 @@ return {
             vim.api.nvim_create_autocmd('LspAttach', {
                 callback = function(args)
                     local opts = { buffer = args.buf, remap = false }
-                    local keyset = vim.keymap.set
                     keyset("n", "<C-k>", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
                     keyset("n", "<C-j>", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
 
