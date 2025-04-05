@@ -27,9 +27,6 @@ vim.opt.cursorline = true
 -- plugins like nvim-colorizer.lua
 vim.opt.termguicolors = true
 
--- round borders on floating windows
-vim.opt.winborder = 'rounded'
-
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "gitcommit",
     command = "setlocal textwidth=72 colorcolumn=72"
