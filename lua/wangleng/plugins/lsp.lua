@@ -1,30 +1,67 @@
 return {
-    -- lsp
-    {
-        'neovim/nvim-lspconfig',
-        dependencies = {
-            { 'hrsh7th/cmp-nvim-lsp' },
-        },
-        config = function()
-            vim.opt.signcolumn = 'yes'
-        end
-    },
-    -- mason: manager for LSP, DAP, formatters, etc...
-    {
-        'williamboman/mason.nvim',
-        opts = {},
-    },
-    -- mason configuration
+    -- lsp configuration (mainly through mason)
     {
         'williamboman/mason-lspconfig.nvim',
         dependencies = {
-            { 'VonHeikemen/lsp-zero.nvim' },
-            { 'neovim/nvim-lspconfig' },
+            -- mason: manager for LSP, DAP, formatters, etc...
             { 'williamboman/mason.nvim' },
+
+            -- neovim's lspconfig API
+            { 'neovim/nvim-lspconfig' },
+
+            -- auto-complete functionality
+            { 'hrsh7th/nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp' },
+
+            -- fancy symbols in auto-complete
+            { 'onsails/lspkind.nvim' },
+
+            -- lua snippets for auto-complete
+            { 'L3MON4D3/LuaSnip' },
+
+            -- TODO: deprecate this:
+            -- lsp-zero
+            { 'VonHeikemen/lsp-zero.nvim' },
         },
         config = function()
+            -- reserve a space in the gutter
+            -- this will avoid an annoying layout shift in the screen
+            vim.opt.signcolumn = 'yes'
+
+            -- for fancy symbols in auto-complete
+            local lspkind = require('lspkind')
+            lspkind.init({
+                mode = 'symbol_text'
+            })
+
+            -- setup auto-complete
+            local cmp = require('cmp')
+            cmp.setup({
+                sources = {
+                    { name = 'nvim_lsp' },
+                },
+                snippet = {
+                    expand = function(args)
+                        -- LuaSnip snippets
+                        require('luasnip').lsp_expand(args.body)
+                    end,
+                },
+                mapping = cmp.mapping.preset.insert({
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                }),
+                formatting = {
+                    format = lspkind.cmp_format({
+                        mode = 'symbol_text'
+                    })
+                }
+            })
+
             local lsp_zero = require('lsp-zero')
             lsp_zero.extend_lspconfig()
+
+            -- important: need to init mason before init mason-lspconfig
+            require('mason').setup({})
 
             require('mason-lspconfig').setup({
                 ensure_installed = {
@@ -77,55 +114,6 @@ return {
                     end
                 }
             })
-        end
-    },
-    -- lsp: auto completion
-    {
-        'hrsh7th/nvim-cmp',
-        dependencies = {
-            {
-                'L3MON4D3/LuaSnip',
-            },
-        },
-        config = function()
-            local cmp = require('cmp')
-
-            cmp.setup({
-                sources = {
-                    { name = 'nvim_lsp' },
-                },
-                snippet = {
-                    expand = function(args)
-                        require('luasnip').lsp_expand(args.body)
-                    end,
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                })
-            })
-        end
-    },
-    -- lsp: fancy symbols in auto-complete
-    {
-        'onsails/lspkind.nvim',
-        dependencies = {
-            { 'hrsh7th/nvim-cmp' },
-        },
-        config = function()
-            local lspkind = require('lspkind')
-            lspkind.init({
-                mode = 'symbol_text'
-            })
-
-            local cmp = require('cmp')
-            cmp.setup {
-                formatting = {
-                    format = lspkind.cmp_format({
-                        mode = 'symbol_text'
-                    })
-                }
-            }
         end
     },
     -- lsp: formatting
