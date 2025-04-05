@@ -18,10 +18,6 @@ return {
 
             -- lua snippets for auto-complete
             { 'L3MON4D3/LuaSnip' },
-
-            -- TODO: deprecate this:
-            -- lsp-zero
-            { 'VonHeikemen/lsp-zero.nvim' },
         },
         config = function()
             -- reserve a space in the gutter
@@ -57,11 +53,10 @@ return {
                 }
             })
 
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_lspconfig()
-
             -- important: need to init mason before init mason-lspconfig
             require('mason').setup({})
+
+            local lspconfig = require('lspconfig')
 
             require('mason-lspconfig').setup({
                 ensure_installed = {
@@ -77,15 +72,48 @@ return {
                     'zls',
                 },
                 handlers = {
-                    lsp_zero.default_setup,
+                    -- default handler
+                    function(server_name)
+                        lspconfig[server_name].setup {}
+                    end,
                     lua_ls = function()
-                        -- nvim_lua_ls() configures lua_ls to understand neovim config lua
-                        local lua_opts = lsp_zero.nvim_lua_ls()
-                        require('lspconfig').lua_ls.setup(lua_opts)
+                        local runtime_path = vim.split(package.path, ';')
+                        table.insert(runtime_path, 'lua/?.lua')
+                        table.insert(runtime_path, 'lua/?/init.lua')
+
+                        -- lua_opts configures lua_ls to understand neovim config lua
+                        local lua_opts = {
+                            settings = {
+                                Lua = {
+                                    -- Disable telemetry
+                                    telemetry = { enable = false },
+                                    runtime = {
+                                        -- Tell the language server which version of Lua you're using
+                                        -- (most likely LuaJIT in the case of Neovim)
+                                        version = 'LuaJIT',
+                                        path = runtime_path,
+                                    },
+                                    diagnostics = {
+                                        -- Get the language server to recognize the `vim` global
+                                        globals = { 'vim' }
+                                    },
+                                    workspace = {
+                                        checkThirdParty = false,
+                                        library = {
+                                            -- Make the server aware of Neovim runtime files
+                                            vim.fn.expand('$VIMRUNTIME/lua'),
+                                            vim.fn.stdpath('config') .. '/lua'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        lspconfig.lua_ls.setup(lua_opts)
                     end,
                     ts_ls = function()
                         -- typescript inlay hints need to be manually enabled
-                        require('lspconfig').ts_ls.setup({
+                        lspconfig.ts_ls.setup({
                             settings = {
                                 typescript = {
                                     inlayHints = {
