@@ -15,7 +15,7 @@ return {
                 keyset("n", "<Leader>G", ":Git<Space>")
             else
                 keyset("n", "<Leader>g", function()
-                    print("Fugitive is blocked for this project")
+                    print("Fugitive is blocked for this project (disable_vim_fugitive = true)")
                 end)
             end
         end
