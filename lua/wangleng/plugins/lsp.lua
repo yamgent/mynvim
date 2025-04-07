@@ -18,6 +18,9 @@ return {
 
             -- snippet functionality
             { 'L3MON4D3/LuaSnip' },
+
+            -- project settings
+            { "yamgent/simple-settings.nvim" },
         },
         config = function()
             local keyset = vim.keymap.set
@@ -26,7 +29,11 @@ return {
             -- this will avoid an annoying layout shift in the screen
             vim.opt.signcolumn = 'yes'
 
-            vim.lsp.inlay_hint.enable()
+            local settings = require('simple-settings')
+            local enable_inlay_hints = not settings.get_field("hide_inlay_hints")
+
+            vim.lsp.inlay_hint.enable(enable_inlay_hints)
+
             keyset("n", "<leader>i", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
 
             -- make hover window (the window when you press K) round bordered

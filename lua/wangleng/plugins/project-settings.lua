@@ -7,7 +7,8 @@ return {
 
             settings.setup()
             settings.read_config({
-                disable_vim_fugitive = false
+                disable_vim_fugitive = false,
+                hide_inlay_hints = false
             })
         end
     },
