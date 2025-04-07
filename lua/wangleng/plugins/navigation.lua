@@ -13,11 +13,17 @@ return {
                 -- This will not install any breaking changes.
                 -- For major updates, this must be adjusted manually.
                 version = "^1.0.0",
-            }
+            },
+
+            -- project settings
+            'yamgent/simple-settings.nvim'
         },
         config = function()
             local telescope = require('telescope')
             local lga_actions = require('telescope-live-grep-args.actions')
+
+            local settings = require('simple-settings')
+            local telescope_grep_quick_postfix = settings.get_field("telescope_grep_quick_postfix")
 
             telescope.setup({
                 extensions = {
@@ -36,6 +42,8 @@ return {
                                 ["<C-u>"] = lga_actions.quote_prompt({ postfix = " -s " }),
                                 -- freeze the current list and start a fuzzy search in the frozen list
                                 ["<C-space>"] = lga_actions.to_fuzzy_refine,
+                                -- customizable quick postfix
+                                ["<C-p>"] = lga_actions.quote_prompt({ postfix = telescope_grep_quick_postfix }),
                             }
                         }
                     }

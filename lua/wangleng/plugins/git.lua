@@ -2,11 +2,12 @@ return {
     -- tpope: git
     {
         'tpope/vim-fugitive',
+        dependencies = { "yamgent/simple-settings.nvim" },
         config = function()
+            local settings = require('simple-settings')
             local keyset = vim.keymap.set
 
-            local git_local_config = vim.fn.system("git config --local --list")
-            local allow_fugitive = string.find(git_local_config, "vim.blockfugitive=1") == nil
+            local allow_fugitive = not settings.get_field("disable_vim_fugitive")
 
             if allow_fugitive then
                 keyset("n", "<Leader>g", ":Git<CR>")
@@ -14,7 +15,7 @@ return {
                 keyset("n", "<Leader>G", ":Git<Space>")
             else
                 keyset("n", "<Leader>g", function()
-                    print("Fugitive is blocked due to vim.blockfugitive=1 configured in git")
+                    print("Fugitive is blocked for this project (disable_vim_fugitive = true)")
                 end)
             end
         end
@@ -28,4 +29,3 @@ return {
         },
     },
 }
-
