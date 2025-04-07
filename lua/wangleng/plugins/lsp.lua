@@ -237,6 +237,7 @@ return {
     -- lsp: formatting
     {
         'stevearc/conform.nvim',
+        dependencies = { 'yamgent/simple-settings.nvim' },
         config = function()
             ---Selects the first available formatter.
             ---
@@ -280,17 +281,22 @@ return {
                 },
             })
 
+            local settings = require('simple-settings')
+            local format_on_save = not settings.get_field("disable_format_on_save")
+
             -- format on save
             vim.api.nvim_create_autocmd("BufWritePre", {
                 pattern = "*",
                 callback = function(args)
-                    require("conform").format({
-                        bufnr = args.buf,
-                        -- so that we don't have to manually set it up
-                        -- for other languages like rust, go, etc...
-                        -- which already know how to format
-                        lsp_format = 'fallback',
-                    })
+                    if format_on_save then
+                        require("conform").format({
+                            bufnr = args.buf,
+                            -- so that we don't have to manually set it up
+                            -- for other languages like rust, go, etc...
+                            -- which already know how to format
+                            lsp_format = 'fallback',
+                        })
+                    end
                 end,
             })
         end

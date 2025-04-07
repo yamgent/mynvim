@@ -30,3 +30,15 @@ In `~/.config/simple-settings/settings.json`
     }
 }
 ```
+
+## Disable formatting on save
+
+In `~/.config/simple-settings/settings.json`
+
+```json
+{
+    "<...path to project>": {
+        "disable_format_on_save": true
+    }
+}
+```
