@@ -42,3 +42,20 @@ In `~/.config/simple-settings/settings.json`
     }
 }
 ```
+
+## Customize quick postfix for telescope grep
+
+Useful for cases where the project may have a standard set of ignores for
+example.
+
+Access the quick postfix with `<C-p>` when telescope grep is active.
+
+In `~/.config/simple-settings/settings.json`
+
+```json
+{
+    "<...path to project>": {
+        "telescope_grep_quick_postfix": " --iglob '!README.md'"
+    }
+}
+```

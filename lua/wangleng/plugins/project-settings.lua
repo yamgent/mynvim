@@ -10,6 +10,7 @@ return {
                 disable_vim_fugitive = false,
                 hide_inlay_hints = false,
                 disable_format_on_save = false,
+                telescope_grep_quick_postfix = "",
             })
         end
     },
