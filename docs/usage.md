@@ -48,7 +48,7 @@ In `~/.config/simple-settings/settings.json`
 Useful for cases where the project may have a standard set of ignores for
 example.
 
-Access the quick postfix with `<C-p>` when telescope grep is active.
+Access the quick postfix with `<C-c>` when telescope grep is active.
 
 In `~/.config/simple-settings/settings.json`
 
