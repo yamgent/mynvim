@@ -43,7 +43,7 @@ return {
                                 -- freeze the current list and start a fuzzy search in the frozen list
                                 ["<C-space>"] = lga_actions.to_fuzzy_refine,
                                 -- customizable quick postfix
-                                ["<C-p>"] = lga_actions.quote_prompt({ postfix = telescope_grep_quick_postfix }),
+                                ["<C-c>"] = lga_actions.quote_prompt({ postfix = telescope_grep_quick_postfix }),
                             }
                         }
                     }
