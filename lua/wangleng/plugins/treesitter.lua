@@ -24,6 +24,7 @@ return {
                     "rust", "toml",
                     "go", "gomod",
                     "zig",
+                    "odin",
                 },
                 -- install parsers synchronously (only applied to `ensure_installed`)
                 -- zig can only install synchronously, async install somehow have problems
