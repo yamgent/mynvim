@@ -160,7 +160,10 @@ return {
                     'clangd',
                     'gopls',
                     'zls',
+                    -- odin
                     'ols',
+                    -- typst
+                    'tinymist',
                 },
                 handlers = {
                     -- default handler

@@ -25,6 +25,7 @@ return {
                     "go", "gomod",
                     "zig",
                     "odin",
+                    "typst",
                 },
                 -- install parsers synchronously (only applied to `ensure_installed`)
                 -- zig can only install synchronously, async install somehow have problems
