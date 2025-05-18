@@ -160,6 +160,7 @@ return {
                     'clangd',
                     'gopls',
                     'zls',
+                    'ols',
                 },
                 handlers = {
                     -- default handler
