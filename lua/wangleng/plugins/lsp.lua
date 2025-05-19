@@ -248,6 +248,27 @@ return {
             dependencies_bin = { ['tinymist'] = 'tinymist' }
         },
     },
+    -- lsp: code actions with preview
+    {
+        "rachartier/tiny-code-action.nvim",
+        dependencies = {
+            { "nvim-lua/plenary.nvim" },
+
+            -- optional picker via telescope
+            { "nvim-telescope/telescope.nvim" },
+        },
+        event = "LspAttach",
+        config = function()
+            local codeAction = require('tiny-code-action')
+            local keyset = vim.keymap.set
+
+            codeAction.setup({})
+
+            keyset("n", "gra", function()
+                codeAction.code_action()
+            end)
+        end
+    },
     -- lsp: formatting
     {
         'stevearc/conform.nvim',
