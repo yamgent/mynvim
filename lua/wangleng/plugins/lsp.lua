@@ -238,6 +238,16 @@ return {
             })
         end
     },
+    -- typst (tinymist): preview
+    {
+        'chomosuke/typst-preview.nvim',
+        lazy = false, -- or ft = 'typst'
+        version = '1.*',
+        opts = {
+            -- use the tinymist from mason
+            dependencies_bin = { ['tinymist'] = 'tinymist' }
+        },
+    },
     -- lsp: formatting
     {
         'stevearc/conform.nvim',
